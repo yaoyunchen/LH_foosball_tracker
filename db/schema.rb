@@ -11,33 +11,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2016012719220000) do
+ActiveRecord::Schema.define(version: 20160128074417) do
 
-  create_table "matches", force: :cascade do |t|
-    t.integer  "request_id"
-    t.integer  "user1_id"
-    t.integer  "user2_id"
-    t.integer  "winner_id"
-    t.integer  "loser_id"
-    t.string   "status"
+  create_table "match_invites", force: :cascade do |t|
+    t.integer "match_request_id", null: false
+    t.integer "user_id",          null: false
+    t.string  "team",             null: false
+    t.boolean "accept"
+  end
+
+  add_index "match_invites", ["match_request_id"], name: "index_match_invites_on_match_request_id"
+  add_index "match_invites", ["user_id"], name: "index_match_invites_on_user_id"
+
+  create_table "match_participactions", force: :cascade do |t|
+    t.integer "match_id", null: false
+    t.integer "user_id",  null: false
+    t.string  "team",     null: false
+    t.integer "result"
+  end
+
+  add_index "match_participactions", ["match_id"], name: "index_match_participactions_on_match_id"
+  add_index "match_participactions", ["user_id"], name: "index_match_participactions_on_user_id"
+
+  create_table "match_requests", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "match_id"
+    t.string   "category",   null: false
+    t.string   "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "requests", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "recipient_id"
-    t.string   "status"
-    t.string   "message"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+  create_table "matches", force: :cascade do |t|
+    t.integer  "match_request_id"
+    t.string   "status",           default: "set"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "username"
-    t.string   "email"
-    t.string   "password"
-    t.string   "img"
+    t.string   "username",   null: false
+    t.string   "email",      null: false
+    t.string   "password",   null: false
     t.string   "bio"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
