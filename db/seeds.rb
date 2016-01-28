@@ -18,16 +18,16 @@ end
 
 
 
-match_request_yml = convert_to_yml('db/data/match_requests.yml')
+# match_request_yml = convert_to_yml('db/data/match_requests.yml')
 
-match_request_yml.each_pair do |id, info|
-  MatchRequest.create!(
-    user_id: id,
-    match_id: info["match_id"],
-    category: info["category"],
-    message: info["message"]
-  )
-end
+# match_request_yml.each_pair do |id, info|
+#   MatchRequest.create!(
+#     user_id: id,
+#     match_id: info["match_id"],
+#     category: info["category"],
+#     message: info["message"]
+#   )
+# end
 
 
 

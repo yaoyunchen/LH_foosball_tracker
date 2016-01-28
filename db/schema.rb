@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20160128074417) do
     t.integer  "user_id",    null: false
     t.integer  "match_id"
     t.string   "category",   null: false
+    t.string   "status"
     t.string   "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
