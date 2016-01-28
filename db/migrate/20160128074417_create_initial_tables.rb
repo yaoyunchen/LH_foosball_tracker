@@ -9,10 +9,18 @@ class CreateInitialTables < ActiveRecord::Migration
     end
 
     create_table :match_requests do |t|
-      t.references :user, null: false
+      t.belongs_to :user, null: false
       t.references :match
+      t.string :category, null: false # singles, doubles
       t.string :message
       t.timestamps null: false
+    end
+
+    create_table :match_invites do |t|
+      t.belongs_to :match_request, index: true, null: false
+      t.belongs_to :user, index: true, null: false
+      t.string :team, null: false
+      t.boolean :accept # null, true, false
     end
 
     create_table :matches do |t|
@@ -21,31 +29,12 @@ class CreateInitialTables < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    create_table :match_players do |t|
+    create_table :match_participactions do |t|
       t.belongs_to :match, index: true, null: false
       t.belongs_to :user, index: true, null: false
-      t.string :match_type, null: false # singles, doubles
-      t.integer :result
+      t.string :team, null: false # 1, 2, or custom team name
+      t.integer :result # -1: loss, 0: cancelled, 1: win
     end
-
-    create_table :match_invites do |t|
-      t.belongs_to :request, index: true, null: false
-      t.belongs_to :user, index: true, null: false
-      t.boolean :accept_invite # true, false
-    end
-
-    # create_join_table :matches, :users do |t|
-    #   t.index :match_id
-    #   t.index :user_id
-    #   t.string :match_type, null: false # singles, doubles
-    #   t.integer :result
-    # end
-
-    # create_join_table :requests, :users do |t|
-    #   t.index :request_id
-    #   t.index :user_id
-    #   t.boolean :accept_invite # true, false
-    # end
 
   end
 end

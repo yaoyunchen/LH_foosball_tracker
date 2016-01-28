@@ -1,4 +1,4 @@
 class MatchInvite < ActiveRecord::Base
-  belongs_to :request
+  belongs_to :match_request
   belongs_to :user
 end
