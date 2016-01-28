@@ -1,4 +1,4 @@
-class AddRequests < ActiveRecord::Migration
+class AddRequest < ActiveRecord::Migration
   def change
     create_table :requests do |t|
       t.string :user_id

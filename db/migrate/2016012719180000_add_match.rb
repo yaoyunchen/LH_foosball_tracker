@@ -1,4 +1,4 @@
-class AddMatches < ActiveRecord::Migration
+class AddMatch < ActiveRecord::Migration
   def change
     create_table :matches do |t|
       t.string :user1_id
