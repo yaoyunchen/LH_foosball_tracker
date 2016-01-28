@@ -5,7 +5,7 @@ class MatchesImporter
   end
 
   def import
-    field_names = ['user1_id', 'user2_id', 'winner_id', 'loser_id', 'request_id', ]
+    field_names = ['user1_id', 'user2_id', 'winner_id', 'loser_id', 'status', 'request_id', ]
     puts "Importing match from '#{@filename}'."
     failure_count = 0
     Match.transaction do 

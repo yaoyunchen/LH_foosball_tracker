@@ -14,20 +14,21 @@
 ActiveRecord::Schema.define(version: 2016012719220000) do
 
   create_table "matches", force: :cascade do |t|
-    t.string   "user1_id"
-    t.string   "user2_id"
-    t.string   "winner_id"
-    t.string   "loser_id"
-    t.string   "request_id"
+    t.integer  "request_id"
+    t.integer  "user1_id"
+    t.integer  "user2_id"
+    t.integer  "winner_id"
+    t.integer  "loser_id"
+    t.string   "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "requests", force: :cascade do |t|
-    t.string   "user_id"
-    t.string   "recipient_id"
-    t.string   "message"
+    t.integer  "user_id"
+    t.integer  "recipient_id"
     t.string   "status"
+    t.string   "message"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
@@ -36,6 +37,7 @@ ActiveRecord::Schema.define(version: 2016012719220000) do
     t.string   "username"
     t.string   "email"
     t.string   "password"
+    t.string   "img"
     t.string   "bio"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

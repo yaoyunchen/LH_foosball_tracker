@@ -5,7 +5,7 @@ class UsersImporter
   end
 
   def import
-    field_names = ['username', 'email', 'password', 'bio']
+    field_names = ['username', 'email', 'password', 'img', 'bio']
     puts "Importing users from '#{@filename}'."
     failure_count = 0
     User.transaction do 

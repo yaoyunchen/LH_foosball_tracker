@@ -1,0 +1,50 @@
+"test_01":
+  email: "test_01@email.com"
+  password: "pass01"
+  img: 
+  bio: "Tester 1's bio."
+"test_02":
+  email: "test_02@email.com"
+  password: "pass02"
+  img: 
+  bio: "Tester 2's bio."
+"test_03":
+  email: "test_03@email.com"
+  password: "pass03"
+  img: 
+  bio: "Tester 3's bio."
+"test_04":
+  email: "test_04@email.com"
+  password: "pass04"
+  img: 
+  bio: "Tester 4's bio."
+"test_05":
+  email: "test_05@email.com"
+  password: "pass05"
+  img: 
+  bio: "Tester 5's bio."
+"test_06":
+  email: "test_06@email.com"
+  password: "pass06"
+  img: 
+  bio: "Tester 6's bio."
+"test_07":
+  email: "test_07@email.com"
+  password: "pass07"
+  img: 
+  bio:
+"test_08":
+  email: "test_08@email.com"
+  password: "pass08"
+  img: 
+  bio: "Tester 8's bio."
+"test_09":
+  email: "test_09@email.com"
+  password: "pass09"
+  img: 
+  bio: "Tester 9's bio."
+"test_01":
+  email: "test_10@email.com"
+  password: "pass10"
+  img: 
+  bio: "Tester 10's bio."
