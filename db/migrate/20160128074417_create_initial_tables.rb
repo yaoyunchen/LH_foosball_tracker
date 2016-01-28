@@ -4,6 +4,7 @@ class CreateInitialTables < ActiveRecord::Migration
       t.string :username, null: false
       t.string :email, null: false
       t.string :password, null: false
+      t.string :img_path
       t.string :bio
       t.timestamps null: false
     end
@@ -12,6 +13,7 @@ class CreateInitialTables < ActiveRecord::Migration
       t.belongs_to :user, null: false
       t.references :match
       t.string :category, null: false # singles, doubles
+      t.string :status
       t.string :message
       t.timestamps null: false
     end

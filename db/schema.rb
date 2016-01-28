@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20160128074417) do
     t.string   "username",   null: false
     t.string   "email",      null: false
     t.string   "password",   null: false
+    t.string   "img_path"
     t.string   "bio"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
