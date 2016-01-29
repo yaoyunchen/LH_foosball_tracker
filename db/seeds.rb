@@ -52,8 +52,8 @@ end
 #   )
 # end
 
-# match_participaction = convert_to_yml('db/data/match_participactions.yml')
-# match_participaction.each_pair do |id, info|
+# match_result = convert_to_yml('db/data/match_results.yml')
+# match_result.each_pair do |id, info|
 #   match_id: id,
 #   user_id: info["user_id"],
 #   team: info["team"],

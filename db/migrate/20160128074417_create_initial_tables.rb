@@ -31,7 +31,7 @@ class CreateInitialTables < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    create_table :match_participactions do |t|
+    create_table :match_results do |t|
       t.belongs_to :match, index: true, null: false
       t.belongs_to :user, index: true, null: false
       t.string :team, null: false # 1, 2, or custom team name

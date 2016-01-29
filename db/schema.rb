@@ -23,16 +23,6 @@ ActiveRecord::Schema.define(version: 20160128074417) do
   add_index "match_invites", ["match_request_id"], name: "index_match_invites_on_match_request_id"
   add_index "match_invites", ["user_id"], name: "index_match_invites_on_user_id"
 
-  create_table "match_participactions", force: :cascade do |t|
-    t.integer "match_id", null: false
-    t.integer "user_id",  null: false
-    t.string  "team",     null: false
-    t.integer "result"
-  end
-
-  add_index "match_participactions", ["match_id"], name: "index_match_participactions_on_match_id"
-  add_index "match_participactions", ["user_id"], name: "index_match_participactions_on_user_id"
-
   create_table "match_requests", force: :cascade do |t|
     t.integer  "user_id",    null: false
     t.integer  "match_id"
@@ -42,6 +32,16 @@ ActiveRecord::Schema.define(version: 20160128074417) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "match_results", force: :cascade do |t|
+    t.integer "match_id", null: false
+    t.integer "user_id",  null: false
+    t.string  "team",     null: false
+    t.integer "result"
+  end
+
+  add_index "match_results", ["match_id"], name: "index_match_results_on_match_id"
+  add_index "match_results", ["user_id"], name: "index_match_results_on_user_id"
 
   create_table "matches", force: :cascade do |t|
     t.integer  "match_request_id"

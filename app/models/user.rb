@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   has_many :match_requests
   has_many :match_invites
-  has_many :match_participactions
+  has_many :match_results
   
   validates :username, 
     presence: true,
@@ -73,13 +73,13 @@ class User < ActiveRecord::Base
 
   #Calculates user's wins
   def calc_wins
-    User.find_by(id: self.id).match_participactions.where(result: 1).select(:result).count
+    User.find_by(id: self.id).match_results.where(result: 1).select(:result).count
   end
 
 
   #Calculates user's losses
   def calc_losses
-    User.find_by(id: self.id).match_participactions.where(result: -1).select(:result).count
+    User.find_by(id: self.id).match_results.where(result: -1).select(:result).count
   end
 
 
@@ -91,6 +91,6 @@ class User < ActiveRecord::Base
 
   #Calculate's user's total games played
   def calc_total_plays
-    User.find_by(id: self.id).match_participactions.where.not("result = 0 OR result IS NULL").count
+    User.find_by(id: self.id).match_results.where.not("result = 0 OR result IS NULL").count
   end
 end
