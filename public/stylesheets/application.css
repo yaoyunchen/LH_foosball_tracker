@@ -2306,18 +2306,6 @@ table {
     margin-left: 0;
     padding-left: 0;
     border-left: none; }
-  .custom-media-profile .button {
-    margin-top: 0.5rem;
-    margin-left: 0.5rem;
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    border-radius: 50%; }
-  .custom-media-profile .button .fa {
-    width: 40px;
-    line-height: 40px; }
-  .custom-media-profile .button .fa {
-    color: #666; }
 
 .custom-sub-menu {
   position: fixed;
@@ -2351,3 +2339,15 @@ table {
 
 .custom-container-with-subnav {
   padding-bottom: 117px; }
+
+.button.custom-circle-button {
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%; }
+  .button.custom-circle-button .fa {
+    width: 40px;
+    line-height: 40px;
+    color: #666; }
