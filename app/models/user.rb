@@ -17,8 +17,7 @@ class User < ActiveRecord::Base
 
   class FailInviteError < StandardError; end
 
-
-  def issue_request(players, message = nil, type = "singles")
+  def issue_request(players, type = "singles", message = nil)
     
     #Creates a match request when a user challenges player(s).
     match_request = self.match_requests.create!(
@@ -52,10 +51,10 @@ class User < ActiveRecord::Base
 
       #If any of the invites fail, then dont send any invite at all.
       MatchInvite.transaction do
+        self_invite.save!
         player_invites.each do |invite|
           invite.save!
         end
-        self_invite.save!
       end
     rescue ActiveRecord::RecordInvalid
       #Change the match request to show that the invites failed.
@@ -63,14 +62,14 @@ class User < ActiveRecord::Base
     end  
   end
 
-  def accept_invite
-
-
+  def accept_invite(match_request_id)
+    @invite = MatchInvite.find_by(match_request_id: match_request_id, user_id: self.id, accept: nil)
+    @invite.update!(accept: true)
   end
 
 
-  def decline_invite
-
-
+  def decline_invite(match_request_id)
+    MatchInvite.where(match_request_id: match_request_id).update_all(accept: false)
+    MatchRequest.find_by(id: match_request_id).update!(status: "failed")
   end
 end

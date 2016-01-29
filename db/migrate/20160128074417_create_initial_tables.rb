@@ -13,7 +13,7 @@ class CreateInitialTables < ActiveRecord::Migration
       t.belongs_to :user, null: false
       t.references :match
       t.string :category, null: false # singles, doubles
-      t.string :status
+      t.string :status  #nil, "failed", "accepted"
       t.string :message
       t.timestamps null: false
     end
@@ -27,7 +27,7 @@ class CreateInitialTables < ActiveRecord::Migration
 
     create_table :matches do |t|
       t.references :match_request
-      t.string :status, default: 'set' # set (default), cancelled, over
+      t.string :status # set (default), cancelled, over
       t.timestamps null: false
     end
 

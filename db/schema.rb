@@ -45,9 +45,9 @@ ActiveRecord::Schema.define(version: 20160128074417) do
 
   create_table "matches", force: :cascade do |t|
     t.integer  "match_request_id"
-    t.string   "status",           default: "set"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.string   "status"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "users", force: :cascade do |t|

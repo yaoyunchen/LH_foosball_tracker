@@ -4,9 +4,9 @@ class MatchRequest < ActiveRecord::Base
   has_one :match
 
   validates :user_id, 
-    numeralicality: {only_integer: true}
+    numericality: {only_integer: true}
   validates :category, 
     inclusion: {within: ["singles", "doubles"]}
   validates :status,
-    inclusion: {within: ["failed", "accepted", nil]}
+    inclusion: {within: [nil, "failed", "accepted"]}
 end

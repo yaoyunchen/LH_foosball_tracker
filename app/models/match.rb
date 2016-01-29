@@ -3,21 +3,85 @@ class Match < ActiveRecord::Base
   has_many :match_participactions
 
   validates :match_request_id,
-    numeralicality: {only_integer: true}
+    numericality: {only_integer: true}
   validates :status,
-    inclusion: {within: ["set", "cancelled", "finished"]}
+    inclusion: {within: [nil, "cancelled", "over"]}
 
-  after_update :update_participants
+  after_create :create_participactions
+ 
 
-  private 
 
-    #Once the match is finished, update the MatchParticipaction table with wins/losses.  If the game is dropped, update it with cancelled.
-    def update_participants
-      if self.status == "finished"
-        
+  def match_over(winning_team)
+    Match.find_by(id: self.id).update!(status: "over")
+  
+    update_participactions(winning_team)
+  end
+
+  def match_cancelled
+    Match.find_by(id: self.id).update!(status: "cancelled")
+    begin
+      players = MatchParticipaction.where(match_id: self.id)
+
+      MatchParticipaction.transaction do
+        players.each do |player|
+          player.update!(result: 0)
+        end
       end
-      if self.status == "cancelled"
+    end 
+  end
 
+  def update_participactions(winning_team)
+    begin
+      match = Match.find_by(id: self.id)
+      if match.status == "over"
+        winners = MatchParticipaction.where(match_id: match.id, team: winning_team)
+        losers = MatchParticipaction.where(match_id: match.id).where.not(team: winning_team)
+        puts "some shit happened here."
+        MatchParticipaction.transaction do
+          winners.each do |winner|
+            winner.update!(result: 1)
+          end
+          puts "updated winners."
+          losers.each do |loser|
+            loser.update!(result: -1)
+          end
+          puts "updated losers."
+        end
       end
+    rescue ActiveRecord::RecordInvalid
+      #Change the match request to show that the invites failed.
+      self.status = "cancelled"
+    end 
+  end
+
+ private 
+
+
+    def create_participactions
+      begin
+        all_users = MatchInvite.where(match_request_id: match_request_id)
+
+        participactions = []
+        all_users.each do |user|
+          participactions << MatchParticipaction.new(
+            match_id: self.id,
+            user_id: user.user_id,
+            team: user.team
+          )
+        end
+
+        MatchParticipaction.transaction do
+          participactions.each do |participant|
+            participant.save!
+          end
+        end
+      rescue ActiveRecord::RecordInvalid
+        #Change the match request to show that the invites failed.
+        self.status = "cancelled"
+      end 
     end
 end
+
+
+
+
