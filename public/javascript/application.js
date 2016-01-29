@@ -1,4 +1,8 @@
 $(document).ready(function() {
 
-  // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
+  $('#header-toggle').click(function() {
+    $(this).toggleClass('is-active');
+    $('#header-menu').toggleClass('is-active');
+  });
+  
 });
