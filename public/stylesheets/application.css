@@ -2293,6 +2293,7 @@ table {
   .custom-media-profile .media-image {
     max-width: 60px;
     margin-right: 0.5rem;
+    margin-bottom: 0;
     overflow: hidden;
     border-radius: 50%; }
   .custom-media-profile .media-content {
@@ -2313,5 +2314,35 @@ table {
     padding: 0;
     border-radius: 50%; }
   .custom-media-profile .button .fa {
-    line-height: 40px;
-    opacity: 0.5; }
+    line-height: 40px; }
+  .custom-media-profile .button .fa {
+    color: #666; }
+
+.custom-sub-menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+
+.custom-media-image-collection {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  margin-right: 0.5rem; }
+  .custom-media-image-collection .media-image {
+    margin-right: 0;
+    width: 45%; }
+  .custom-media-image-collection .media-image:nth-child(1) {
+    position: absolute;
+    top: 4px;
+    left: 0;
+    right: 0;
+    margin: 0 auto; }
+  .custom-media-image-collection .media-image:nth-child(2) {
+    position: absolute;
+    bottom: 0;
+    left: 0; }
+  .custom-media-image-collection .media-image:nth-child(3) {
+    position: absolute;
+    bottom: 0;
+    right: 0; }
