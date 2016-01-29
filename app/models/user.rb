@@ -15,20 +15,18 @@ class User < ActiveRecord::Base
   validates :password, 
     presence: true
 
-  class FailInviteError < StandardError; end
 
+  #Creates a match request when a user challenges player(s).
   def issue_request(players, type = "singles", message = nil)
-    
-    #Creates a match request when a user challenges player(s).
     match_request = self.match_requests.create!(
       category: type,
       message: message
     )
     
-    #Sends invite to player(s) challenged.
     send_invites(players, match_request.id)
   end
 
+  #Sends invite to player(s) challenged.
   def send_invites(players, request_id)
     begin
       #Register the current user in the MatchInvite table.
@@ -52,9 +50,7 @@ class User < ActiveRecord::Base
       #If any of the invites fail, then dont send any invite at all.
       MatchInvite.transaction do
         self_invite.save!
-        player_invites.each do |invite|
-          invite.save!
-        end
+        player_invites.each {|invite| invite.save!}
       end
     rescue ActiveRecord::RecordInvalid
       #Change the match request to show that the invites failed.
@@ -62,14 +58,39 @@ class User < ActiveRecord::Base
     end  
   end
 
+  #Lets the user accept match invites.
   def accept_invite(match_request_id)
     @invite = MatchInvite.find_by(match_request_id: match_request_id, user_id: self.id, accept: nil)
     @invite.update!(accept: true)
   end
 
-
+  #Lets the user decline match invites.  Once an invite is declined, all other related invites in the request will be set to false.
   def decline_invite(match_request_id)
     MatchInvite.where(match_request_id: match_request_id).update_all(accept: false)
     MatchRequest.find_by(id: match_request_id).update!(status: "failed")
+  end
+
+
+  #Calculates user's wins
+  def calc_wins
+    User.find_by(id: self.id).match_participactions.where(result: 1).select(:result).count
+  end
+
+
+  #Calculates user's losses
+  def calc_losses
+    User.find_by(id: self.id).match_participactions.where(result: -1).select(:result).count
+  end
+
+
+  #Calculate's user's W/L ratio
+  def calc_ratio
+    (calc_wins.to_f/calc_losses.to_f).round(2)
+  end
+
+
+  #Calculate's user's total games played
+  def calc_total_plays
+    User.find_by(id: self.id).match_participactions.where.not("result = 0 OR result IS NULL").count
   end
 end
