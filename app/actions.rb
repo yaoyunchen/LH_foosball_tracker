@@ -10,6 +10,10 @@ get '/dev/match' do
   erb :'/dev/match/index'
 end
 
+get '/dev/match/requests' do
+  erb :'/dev/match/requests'
+end
+
 get '/dev/match/pending' do
   erb :'/dev/match/pending'
 end
