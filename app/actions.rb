@@ -17,3 +17,19 @@ end
 get '/dev/match/record' do
   erb :'/dev/match/record'
 end
+
+get '/dev/match/select_winner' do
+  erb :'/dev/match/select_winner'
+end
+
+get '/dev/match/match_saved' do
+  erb :'/dev/match/match_saved'
+end
+
+get '/dev/match/challenge_issued' do
+  erb :'/dev/match/challenge_issued'
+end
+
+get '/dev/match/accepted-notification' do
+  erb :'/dev/match/accepted_notification'
+end

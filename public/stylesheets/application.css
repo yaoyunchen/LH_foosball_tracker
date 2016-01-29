@@ -2347,7 +2347,51 @@ table {
   height: 40px;
   padding: 0;
   border-radius: 50%; }
+  .button.custom-circle-button:first-child {
+    margin-left: 0; }
   .button.custom-circle-button .fa {
     width: 40px;
     line-height: 40px;
     color: #666; }
+
+.custom-select-winner {
+  margin: 3rem 0;
+  display: flex;
+  justify-content: center; }
+
+.custom-select-player {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  width: 80px;
+  overflow: hidden;
+  border-radius: 50%; }
+  .custom-select-player img {
+    display: block; }
+
+.custom-winner {
+  transform: scale(1.25); }
+
+.custom-win-ratio-update {
+  margin-top: 1rem; }
+  .custom-win-ratio-update span {
+    display: block;
+    text-align: center; }
+
+.custom-challenge-notification figure {
+  float: left;
+  width: 60px;
+  margin-right: 1rem;
+  overflow: hidden;
+  border-radius: 50%; }
+.custom-challenge-notification img {
+  display: block; }
+.custom-challenge-notification .button {
+  border-color: #FFF; }
+
+.custom-notification-title h5 {
+  padding-top: 0.5rem; }
+
+.custom-notification-buttons {
+  margin-top: 1.5rem; }
+  .custom-notification-buttons .button:first-child {
+    margin-right: 0.25rem; }
