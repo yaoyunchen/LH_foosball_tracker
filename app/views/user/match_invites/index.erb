@@ -1,0 +1,20 @@
+<h1>List of all them invites</h1>
+
+
+<% @invite_hash_array.each do |invite| %>
+
+  <p>
+    <%= invite[:username] %>, 
+    <%= invite[:category] %>
+    <%", " + invite[:message] if invite[:message] %> 
+     
+
+    <form>
+
+    <button type="submit"> Accept </button>
+
+
+    <button type="submit"> Decline </button>
+    </form>
+  </p>
+<% end %>
