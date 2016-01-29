@@ -2395,3 +2395,7 @@ table {
   margin-top: 1.5rem; }
   .custom-notification-buttons .button:first-child {
     margin-right: 0.25rem; }
+
+.custom-start-game {
+  display: flex;
+  justify-content: space-between; }

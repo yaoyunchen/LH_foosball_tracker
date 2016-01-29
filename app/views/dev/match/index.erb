@@ -3,11 +3,21 @@
 <section class="section">
   <div class="container">
 
-    <h1 class='title'>Select Your Opponent</h1>
+    <div class="container custom-start-game">
+      <h1 class='title'>Start a Game</h1>
+      <div class="tabs is-toggle is-right">
+        <ul>
+          <li class='is-active'><a>Singles</a></li>
+          <li><a>Doubles</a></li>
+        </ul>
+      </div>
+    </div>
+
     <form method='get'>
-      <label name='search' class='control'>
-        <input type='text' class='input'>
-      </label>
+      <p class="control is-grouped">
+        <input class="input" type="text" placeholder="Find players">
+        <a class="button is-info">Search</a>
+      </p>
     </form>
 
     <ul>
