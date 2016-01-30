@@ -2435,8 +2435,6 @@ li {
 .custom-stats-table th, .custom-stats-table td {
   vertical-align: middle;
   padding: 0.5rem 0; }
-.custom-stats-table td:first-child {
-  font-size: 1.25rem; }
 .custom-stats-table td span {
   display: block; }
 .custom-stats-table img {
