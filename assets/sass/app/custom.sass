@@ -172,39 +172,7 @@ li
   margin-left: 1.5rem
   list-style: circle
 
-.custom-stats-table
-  tr
-    border-bottom: 1px solid rgba(211, 214, 219, 0.5)
-
-    &:first-child th
-      padding-top: 0
-
-  th, td 
-    vertical-align: middle
-    padding: .5rem 0
-
-  td span
-    display: block
-    
-  img
-    margin-right: .5rem
-    width: 40px
-    display: inline-block
-
-    vertical-align: middle
-
-    border-radius: 50%
-    overflow: hidden
-
-  div
-    vertical-align: middle
-    display: inline-block
-
-  div > span
-    display: block
-
-.custom-stats-table-1
-
+.custom-table-stats
   td 
     vertical-align: middle
 
@@ -225,11 +193,11 @@ li
   div > span
     display: block
 
-.custom-doubles-stats, .custom-latests-stats
+.custom-table-hide-img
   img
     display: none
 
 @media screen and (min-width: 640px)
-  .custom-doubles-stats, .custom-latests-stats 
+  .custom-table-hide-img
     img
       display: inline-block
