@@ -29,7 +29,9 @@ class User < ActiveRecord::Base
   # end
 
   #Creates a match request when a user challenges player(s).
-  def issue_request(players, type = "singles", message = nil)
+  def issue_request(players, message = nil)
+    type = players.count == 1 ? "singles" : "doubles"
+
     match_request = self.match_requests.create!(
       category: type,
       message: message
@@ -100,7 +102,7 @@ class User < ActiveRecord::Base
     if match_results.where.not(result: nil).any? 
       100 * (calc_wins.to_f/calc_total_plays.to_f).round(2) 
     else
-      "0"
+      "0.0"
     end
   end
 
