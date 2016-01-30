@@ -91,14 +91,24 @@ put '/user/pending_matches/:match_id' do
   if choice == "cancelled"
     @match.match_cancelled
   else
-    redirect "/user/pending_matches/#{params[:match_id]}/edit"
+    redirect "/user/pending_matches/#{params[:match_id]}/choose_winner"
     #@match.match_over(choice)
   end
 
   redirect '/'
 end
 
-get '/user/pending_matches/:match_id/edit' do
+get '/user/pending_matches/:match_id/choose_winner' do
+  @match = Match.find params[:match_id]
+  @team_left = MatchResult.find_by(match_id: @match.id ,user_id: current_user.id)
+  @team_right = MatchResult.where.not(user_id: current_user.id).find_by(match_id: @match.id)
+
   erb :'user/pending_matches/choose_winner'
 end
 
+
+put '/user/pending_matches/:match_id/choose_winner/edit' do
+  @match = Match.find params[:match_id]
+  @match.match_over(params[:team])
+  redirect '/'
+end

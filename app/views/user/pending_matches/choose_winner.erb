@@ -1,0 +1,7 @@
+<h1>CHOOSE DA WINNAR</h1>
+
+<form method="POST" action="/user/pending_matches/<%= @match.id %>/choose_winner/edit">
+  <input type="hidden" name="_method" value="put">
+  <button type="submit" name="team" value="<%= @team_left.team %>"><%= @team_left.team %></button>
+  <button type="submit" name="team" value="<%= @team_right.team %>"><%= @team_right.team %></button>
+</form>
