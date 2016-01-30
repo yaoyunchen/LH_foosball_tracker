@@ -1,0 +1,49 @@
+<header class="header">
+  <div class="container">
+
+    <div class="header-left">
+      <a class="header-item" href="/">
+        <p>FML</p>
+      </a>
+      <% if current_user %>
+        <span class="header-item">
+          <a class="button" href="/user/match_request/new">Play</a>
+        </span>
+      <% end %>
+    </div>
+
+    <!-- Hamburger menu (on mobile) -->
+    <span id="header-toggle" class="header-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+
+    <!-- Right side -->
+    <div id="header-menu" class="header-right header-menu">
+      <span class="header-item">
+        <a href="/intro">Intro</a>
+      </span>
+      <span class="header-item">
+        <a href="/leaderboard">Leaderboard</a>
+      </span>
+      <% if current_user %>
+        <span class="header-item">
+          <a href="/user">Account</a>
+        </span>
+
+        <span class="header-item">
+          <a class="button" href="/logout">Log out of <%=current_user.username %></a>
+        </span>
+      <% else %>
+        <span class="header-item">
+          <a href="/users/new">Sign Up</a>
+        </span>
+
+        <span class="header-item">
+          <a class="button" href="/users/login">Log In</a>
+        </span>
+      <% end %>
+    </div>
+  </div>
+</header>
