@@ -1,15 +1,19 @@
 <h1>List of all them invites</h1>
-------------------
 
-
-
-<% @invite_hash_array.each do |invite| %>
-
+<% @invite_array.each do |invite| %>
+  -------------------------------------
   <p>
-    <%= invite[:username] %>, 
-    <%= invite[:category] %>
-    <%", " + invite[:message] if invite[:message] %> 
-     
+    Issuer: <%= invite[:issuer] %>, 
+    Match Type: <%= invite[:match_type] %>
+    <% if invite[:match_type] == "doubles" %>
+      Teams: <%= invite[:left_players] %>  / <%= invite[:right_players] %>
+    <% else %>
+      On team: <%= invite[:team] %> 
+    <% end %>
+    <% unless invite[:message] == "" %>
+      Message: <%= invite[:message] %> 
+    <% end %>
+    
     <form method="POST" action="/user/match_invites/<%= invite[:id]%>">
       <input type="hidden" name="_method" value ="put">
 
@@ -18,10 +22,3 @@
     </form>
   </p>
 <% end %>
-
-
-Fix for doubles
-
--show which team you're on
--show who's on your team,
--show who you're playing against.

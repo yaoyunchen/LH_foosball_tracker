@@ -44,23 +44,52 @@ end
 #Gets a list of invites sent to the user.
 get '/user/match_invites' do
   redirect '/users/login' unless current_user
-
+  
   invites = current_user.match_invites.where(accept: nil).order(match_request_id: :desc)
   
-  requests_array = []
+  @invite_array = []
+
   invites.each do |invite|
+    @id = invite.id
+    @team = invite.team
+    @issuer = ""
+    @match_type = ""
+    @message = ""
+    @left_players = ""
+    @right_players = ""
+
     request = MatchRequest.find_by(id: invite.match_request_id)
+    
+    @issuer << request.user.username
+    @match_type << request.category
+    @message << request.message if request.message 
+    
+    player_array = MatchInvite.where(match_request_id: request.id)
+    
+    team_left = player_array.where(team: @team)
+    team_right = player_array.where.not(team: @team)
 
-    requests_array << {id: invite.id, username: request.user.username, category: request.category, message: request.message}
+    team_left.each do |name|
+      @left_players << User.find(name.user_id).username + " "
+    end
+
+    team_right.each do |name|
+      @right_players << User.find(name.user_id).username + " "
+    end
+
+    @info = {
+      id: @id,
+      team: @team,
+      issuer: @issuer,
+      match_type: @match_type,
+      message: @message,
+      left_players: @left_players,
+      right_players: @right_players
+    }
+
+    @invite_array << @info
   end
-  requests_array
-
-  requests_array.each do |request|
-
-
-
-
-  end
+  @invite_array << @info
 
   erb :'user/match_invites/index'
 end
