@@ -12,6 +12,7 @@ gem 'puma'
 gem 'tux'
 
 gem 'devise'
+gem 'bcrypt'
 
 group :development, :test do
   gem 'pry'

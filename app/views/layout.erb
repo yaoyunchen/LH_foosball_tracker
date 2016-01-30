@@ -21,44 +21,7 @@
   <title></title>
 </head>
 <body>
-
-  <header class="header">
-    <div class="container">
-
-      <div class="header-left">
-        <a class="header-item" href="/">
-          <p>FML</p>
-        </a>
-        <span class="header-item">
-          <a class="button" href="/dev/match">Play</a>
-        </span>
-      </div>
-
-      <!-- Hamburger menu (on mobile) -->
-      <span id="header-toggle" class="header-toggle">
-        <span></span>
-        <span></span>
-        <span></span>
-      </span>
-
-      <!-- Right side -->
-      <div id="header-menu" class="header-right header-menu">
-        <span class="header-item">
-          <a href="/intro">Intro</a>
-        </span>
-        <span class="header-item">
-          <a href="/leaderboard">Leaderboard</a>
-        </span>
-        <span class="header-item">
-          <a href="/account">Account</a>
-        </span>
-        <span class="header-item">
-          <a class="button" href="/account">Log out</a>
-        </span>
-      </div>
-    </div>
-  </header>
-
+  <%= erb :'navbar' %>
   <!-- Main container -->
   <%= yield %>
 </body>

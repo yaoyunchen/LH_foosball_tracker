@@ -3,7 +3,7 @@ class CreateInitialTables < ActiveRecord::Migration
     create_table :users do |t|
       t.string :username, null: false
       t.string :email, null: false
-      t.string :password, null: false
+      t.BCryptHash :password, null: false
       t.string :img_path
       t.string :bio
       t.timestamps null: false
