@@ -46,13 +46,21 @@ get '/user/match_invites' do
   redirect '/users/login' unless current_user
 
   invites = current_user.match_invites.where(accept: nil).order(match_request_id: :desc)
-  @invite_hash_array = []
   
+  requests_array = []
   invites.each do |invite|
-    request = MatchRequest.find_by(invite.match_request_id)
-    @invite_hash_array << {id: invite.id, username: request.user.username, category: request.category, message: request.message}
+    request = MatchRequest.find_by(id: invite.match_request_id)
+
+    requests_array << {id: invite.id, username: request.user.username, category: request.category, message: request.message}
   end
-  @invite_hash_array
+  requests_array
+
+  requests_array.each do |request|
+
+
+
+
+  end
 
   erb :'user/match_invites/index'
 end
