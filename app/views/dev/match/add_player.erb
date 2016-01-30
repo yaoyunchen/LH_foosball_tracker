@@ -1,0 +1,98 @@
+<div class="container custom-container-with-subnav">
+
+<section class="section">
+  <div class="container">
+
+    <div class="container custom-start-game">
+      <h1 class='title'>Create Match</h1>
+      <div class="tabs is-toggle is-right">
+        <ul>
+          <li class='is-active'><a>Singles</a></li>
+          <li><a>Doubles</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <form method='get' class='control'>
+      <p class="control is-grouped">
+        <input class="input" type="text" placeholder="Find players">
+        <a class="button is-info">Search</a>
+      </p>
+    </form>
+
+    <div class='notification custom-is-dark custom-add-players'>
+      <div class='media custom-media-profile'>
+        <figure class='media-image'><img src='/images/player_01.jpg'></figure>
+        <div class='media-content'>
+          <p>ColesoON</p>
+          <div class='custom-media-profile-stats'>
+            <span>12 W</span>
+            <span>13 L</span>
+            <span>48%</span>
+          </div>
+        </div>
+        <div>
+          <a class="button icon is-medium custom-circle-button"><i class="fa fa-times"></i></a>
+        </div>
+      </div>
+      <div class='is-centered'>
+        <a class='button'>Send Invites</a>
+      </div>
+    </div>
+
+    <ul>
+
+      <li class='media custom-media-profile'>
+        <figure class='media-image'><img src='/images/player_02.jpg'></figure>
+        <div class='media-content'>
+          <p>NickBozzMan</p>
+          <div class='custom-media-profile-stats'>
+            <span>24 W</span>
+            <span>2 L</span>
+            <span>92.3%</span>
+          </div>
+        </div>
+        <div>
+          <!-- <a class="button icon is-medium custom-circle-button"><i class="fa fa-info"></i></a> -->
+          <a class="button icon is-medium custom-circle-button"><i class="fa fa-plus"></i></a>
+        </div>
+      </li>
+
+      <li class='media custom-media-profile'>
+        <figure class='media-image'><img src='/images/player_03.jpg'></figure>
+        <div class='media-content'>
+          <p>MikeIke</p>
+          <div class='custom-media-profile-stats'>
+            <span>5 W</span>
+            <span>4 L</span>
+            <span>55.6%</span>
+          </div>
+        </div>
+        <div>
+          <!-- <a class="button icon is-medium custom-circle-button"><i class="fa fa-info"></i></a> -->
+          <a class="button icon is-medium custom-circle-button"><i class="fa fa-plus"></i></a>
+        </div>
+      </li>
+
+      <li class='media custom-media-profile'>
+        <figure class='media-image'><img src='/images/player_04.jpg'></figure>
+        <div class='media-content'>
+          <p>JarHead</p>
+          <div class='custom-media-profile-stats'>
+            <span>13 W</span>
+            <span>9 L</span>
+            <span>59.1%</span>
+          </div>
+        </div>
+        <div>
+          <!-- <a class="button icon is-medium custom-circle-button"><i class="fa fa-info"></i></a> -->
+          <a class="button icon is-medium custom-circle-button"><i class="fa fa-plus"></i></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<%= erb :'/dev/match/_sub_nav' %>
+
+</div>
