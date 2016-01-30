@@ -1,12 +1,12 @@
-# get '/users' do 
-#   erb :'users/index'
-# end
+get '/user' do 
+  erb :'user/index'
+end
 
 
 #Get a form to request a match when the '+' is pressed while selecting opponent(s).
 get '/user/match_request/new' do
+  redirect '/users/login' unless current_user
   @users = User.all
-
   erb :'match_request/new'
 end
 
@@ -43,12 +43,14 @@ end
 
 #Gets a list of invites sent to the user.
 get '/user/match_invites' do
+  redirect '/users/login' unless current_user
+
   invites = current_user.match_invites.where(accept: nil).order(match_request_id: :desc)
   @invite_hash_array = []
   
   invites.each do |invite|
     request = MatchRequest.find_by(invite.match_request_id)
-    @invite_hash_array << {id: invite.id, username: request.user.username,category: request.category, message: request.message}
+    @invite_hash_array << {id: invite.id, username: request.user.username, category: request.category, message: request.message}
   end
   @invite_hash_array
 
@@ -57,7 +59,7 @@ end
 
 # #Gets a notification to accept or decline a specific invite in the invites list.
 get '/user/match_invites/:match_invite_id' do
-
+  redirect '/users/login' unless current_user
 end
 
 #Submits a form for accepting or declining a specific invite in the invites list.
@@ -75,6 +77,8 @@ end
 
 #Show user's pending matches.
 get '/user/pending_matches' do
+  redirect '/users/login' unless current_user
+
   matches = current_user.match_results.where(result: nil)
 
   @match_hash_array = []
@@ -100,6 +104,8 @@ end
 
 #Submits a form for accepting or declining a specific invite in the invites list.
 put '/user/pending_matches/:match_id' do
+  redirect '/users/login' unless current_user
+
   @match = Match.find params[:match_id]
 
   choice = params[:choice]  #"cancelled"
@@ -115,6 +121,8 @@ put '/user/pending_matches/:match_id' do
 end
 
 get '/user/pending_matches/:match_id/choose_winner' do
+  redirect '/users/login' unless current_user
+
   @match = Match.find params[:match_id]
   @team_left = MatchResult.find_by(match_id: @match.id ,user_id: current_user.id)
   @team_right = MatchResult.where.not(team: @team_left).find_by(match_id: @match.id)

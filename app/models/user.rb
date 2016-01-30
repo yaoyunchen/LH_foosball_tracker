@@ -1,11 +1,14 @@
 class User < ActiveRecord::Base
+  #include BCrypt
+
   has_many :match_requests
   has_many :match_invites
   has_many :match_results
   
   validates :username, 
     presence: true,
-    uniqueness: {message: 'Username already taken.'}
+    uniqueness: {message: 'Username already taken.'},
+    format: {with: /\A[a-zA-Z0-9\_]+\z/, message: "Usernames can only include letters, numbers, and '_'"}
 
   validates :email, 
     presence: true,
@@ -15,6 +18,15 @@ class User < ActiveRecord::Base
   validates :password, 
     presence: true
 
+
+  # def pass
+  #   @pass ||= Password.new(password)
+  # end
+
+  # def pass=(new_pass)
+  #   @pass = Password.create(new_pass)
+  #   self.password = @pass
+  # end
 
   #Creates a match request when a user challenges player(s).
   def issue_request(players, type = "singles", message = nil)
@@ -97,4 +109,5 @@ class User < ActiveRecord::Base
   def calc_total_plays
     User.find_by(id: self.id).match_results.where.not("result = 0 OR result IS NULL").count
   end
+ 
 end

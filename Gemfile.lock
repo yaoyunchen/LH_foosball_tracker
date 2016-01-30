@@ -124,6 +124,7 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport
+  bcrypt
   database_cleaner
   devise
   pg

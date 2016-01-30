@@ -1,6 +1,7 @@
 helpers do
+  enable :sessions
   def current_user
-    current_user = User.find_by(id: 1)
+    current_user = User.find_by(id: session[:user_id])
   end
 end
 
