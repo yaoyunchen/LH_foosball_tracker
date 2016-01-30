@@ -2456,3 +2456,10 @@ li {
 @media screen and (min-width: 640px) {
   .custom-doubles-stats img, .custom-latests-stats img {
     display: inline-block; } }
+.custom-stats-table-1 img {
+  margin-right: 0.5rem;
+  width: 40px;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 50%;
+  overflow: hidden; }
