@@ -49,3 +49,7 @@ end
 get '/dev/rules' do
   erb :'/dev/rules/index'
 end
+
+get '/dev/leaderboard' do
+  erb :'/dev/leaderboard/index'
+end

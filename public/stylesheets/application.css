@@ -2427,3 +2427,30 @@ ul {
 li {
   margin-left: 1.5rem;
   list-style: circle; }
+
+.custom-stats-table tr {
+  border-bottom: 1px solid rgba(211, 214, 219, 0.5); }
+  .custom-stats-table tr:first-child th {
+    padding-top: 0; }
+.custom-stats-table th, .custom-stats-table td {
+  vertical-align: middle;
+  padding: 0.5rem 0; }
+.custom-stats-table td:first-child {
+  font-size: 1.25rem; }
+.custom-stats-table td span {
+  display: block; }
+.custom-stats-table img {
+  margin-right: 0.5rem;
+  width: 40px;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 50%;
+  overflow: hidden; }
+
+.custom-doubles-stats img {
+  display: none;
+  float: left; }
+
+@media screen and (min-width: 640px) {
+  .custom-doubles-stats img {
+    display: inline-block; } }
