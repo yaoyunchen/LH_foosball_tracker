@@ -1,0 +1,38 @@
+Text
+
+<div class="container custom-container-with-subnav">
+
+<section class="section">
+  <div class="container">
+
+  <h1 class='title'>Match Invites</h1>
+
+    <ul>
+      <% @invite_array.each do |invite| %>
+      <p>
+        <%= invite[:username] %>, 
+        <%= invite[:category] %>
+        <%", " + invite[:message] if invite[:message] %> 
+          <li class='media custom-media-profile'>
+            <figure class='media-image'><img src='/images/player_04.jpg'></figure>
+            <div class='media-content'>
+              <p>Sent 1 days ago</p>
+              <p>From <%= invite[:issuer] %></p>
+              <p>Type: <%= invite[:match_type] %></p>
+            </div>
+            <div><form method="POST" action="/user/match_invites/<%= invite[:id]%>">
+              <input type="hidden" name="_method" value ="put">
+              <a class="button icon is-medium custom-circle-button"><i class="fa fa-times" name="choice" value='false'></i></a>
+              <a class="button icon is-medium custom-circle-button"><i class="fa fa-check" name="choice" value='true'></i></a>
+                </form>
+            </div>
+              </p>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<%= erb :'/dev/match/_sub_nav' %>
+
+</div>
