@@ -2286,8 +2286,7 @@ table {
   box-sizing: border-box; }
 
 .custom-media-profile {
-  display: flex;
-  margin-top: 1rem; }
+  display: flex; }
   .custom-media-profile img {
     display: block; }
   .custom-media-profile .media-image {
@@ -2425,7 +2424,6 @@ ul {
   margin-bottom: 20px; }
 
 li {
-  margin-left: 1.5rem;
   list-style: circle; }
 
 .custom-table-stats td {
