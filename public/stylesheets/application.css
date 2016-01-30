@@ -2399,3 +2399,24 @@ table {
 .custom-start-game {
   display: flex;
   justify-content: space-between; }
+
+.custom-add-players .button {
+  border-color: #FFF; }
+
+.notification.custom-is-dark {
+  margin-left: -20px;
+  margin-right: -20px;
+  border-radius: 0;
+  color: #FFF;
+  background-color: #333; }
+  .notification.custom-is-dark .is-centered .button {
+    margin-top: 1rem; }
+
+.custom-selected-teammate {
+  margin-left: -20px;
+  width: calc(100% + 40px);
+  border-bottom: 5px solid rgba(211, 214, 219, 0.5);
+  padding-right: 20px;
+  padding-bottom: 1rem; }
+  .custom-selected-teammate .media-image {
+    margin-left: 20px; }

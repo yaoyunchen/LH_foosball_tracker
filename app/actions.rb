@@ -37,3 +37,11 @@ end
 get '/dev/match/accepted-notification' do
   erb :'/dev/match/accepted_notification'
 end
+
+get '/dev/match/add-player' do
+  erb :'/dev/match/add_player'
+end
+
+get '/dev/match/add-players' do
+  erb :'/dev/match/add_players'
+end
