@@ -45,3 +45,7 @@ end
 get '/dev/match/add-players' do
   erb :'/dev/match/add_players'
 end
+
+get '/dev/rules' do
+  erb :'/dev/rules/index'
+end
