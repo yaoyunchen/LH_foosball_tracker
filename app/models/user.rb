@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
 
   #Calculates user's wins
   def calc_wins
-    User.find_by(id: self.id).match_results.where(result: 1).select(:result).count
+    User.find_by(id: self.id).match_results.where(result: 1).select(:result).count 
   end
 
 
@@ -85,7 +85,11 @@ class User < ActiveRecord::Base
 
   #Calculate's user's W/L ratio
   def calc_ratio
-    (calc_wins.to_f/calc_losses.to_f).round(2)
+    if match_results.where.not(result: nil).any? 
+      100 * (calc_wins.to_f/calc_total_plays.to_f).round(2) 
+    else
+      "50%"
+    end
   end
 
 

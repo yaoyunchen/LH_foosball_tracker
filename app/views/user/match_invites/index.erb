@@ -1,6 +1,6 @@
 <h1>List of all them invites</h1>
 
-
+Fix for doubles
 <% @invite_hash_array.each do |invite| %>
 
   <p>
@@ -9,12 +9,13 @@
     <%", " + invite[:message] if invite[:message] %> 
      
 
-    <form>
+    <form method="POST" action="/user/match_invites/<%= invite[:id]%>">
+      <input type="hidden" name="_method" value ="put">
 
-    <button type="submit"> Accept </button>
-
-
-    <button type="submit"> Decline </button>
+      <button type="submit" name="choice" value='true'> Accept </button>
+      <button type="submit" name="choice" value='false'> Decline </button>
     </form>
+
+
   </p>
 <% end %>
