@@ -2450,12 +2450,8 @@ li {
 .custom-stats-table div > span {
   display: block; }
 
-.custom-doubles-stats img, .custom-latests-stats img {
-  display: none; }
-
-@media screen and (min-width: 640px) {
-  .custom-doubles-stats img, .custom-latests-stats img {
-    display: inline-block; } }
+.custom-stats-table-1 td {
+  vertical-align: middle; }
 .custom-stats-table-1 img {
   margin-right: 0.5rem;
   width: 40px;
@@ -2463,3 +2459,15 @@ li {
   vertical-align: middle;
   border-radius: 50%;
   overflow: hidden; }
+.custom-stats-table-1 div {
+  vertical-align: middle;
+  display: inline-block; }
+.custom-stats-table-1 div > span {
+  display: block; }
+
+.custom-doubles-stats img, .custom-latests-stats img {
+  display: none; }
+
+@media screen and (min-width: 640px) {
+  .custom-doubles-stats img, .custom-latests-stats img {
+    display: inline-block; } }

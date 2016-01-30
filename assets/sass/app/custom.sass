@@ -203,16 +203,11 @@ li
   div > span
     display: block
 
-.custom-doubles-stats, .custom-latests-stats
-  img
-    display: none
-
-@media screen and (min-width: 640px)
-  .custom-doubles-stats, .custom-latests-stats 
-    img
-      display: inline-block
-
 .custom-stats-table-1
+
+  td 
+    vertical-align: middle
+
   img
     margin-right: .5rem
     width: 40px
@@ -222,3 +217,19 @@ li
 
     border-radius: 50%
     overflow: hidden
+
+  div
+    vertical-align: middle
+    display: inline-block
+
+  div > span
+    display: block
+
+.custom-doubles-stats, .custom-latests-stats
+  img
+    display: none
+
+@media screen and (min-width: 640px)
+  .custom-doubles-stats, .custom-latests-stats 
+    img
+      display: inline-block
