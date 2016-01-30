@@ -12,12 +12,28 @@ end
 
 #Submits form for requesting a match.
 post '/user/match_request' do
-  user_id = params[:user_id]
-  team = params[:team]
   type = params[:type]         #Singles or doubles
   message = params[:message]   #Trash talk some shit.
 
-  current_user.issue_request([{user_id: user_id, team: team}], type, message)
+  player2 = {
+    id: params[:user2_id],
+    team: params[:user2_team]
+  }
+
+  player3 = {
+    id: params[:user3_id],
+    team: params[:user3_team]
+  }
+
+  player4 = {
+    id: params[:user4_id],
+    team: params[:user4_team]
+  }
+
+  player_array = [player2, player3, player4]
+
+  current_user.issue_request(player_array, type, message)
+
   redirect '/'
 end
 
@@ -101,7 +117,7 @@ end
 get '/user/pending_matches/:match_id/choose_winner' do
   @match = Match.find params[:match_id]
   @team_left = MatchResult.find_by(match_id: @match.id ,user_id: current_user.id)
-  @team_right = MatchResult.where.not(user_id: current_user.id).find_by(match_id: @match.id)
+  @team_right = MatchResult.where.not(team: @team_left).find_by(match_id: @match.id)
 
   erb :'user/pending_matches/choose_winner'
 end

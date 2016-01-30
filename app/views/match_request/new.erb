@@ -2,18 +2,26 @@
 
 
 <% @users.each do |user| %>
-  <p>
+  <p class="is_selected?">
     Username: <%= user.username %>
     Wins: <%= user.calc_wins %>
     Losses: <%= user.calc_losses %>
     W/L Ratio: <%= user.calc_ratio %>
     Total Games: <%= user.calc_total_plays %>
   </p>
+  
   <form method="POST" action="/user/match_request">
 
-    <input type="hidden" name="user_id" value = <%= 2 %> >
-    <input type="hidden" name="team" value = <%= 2 %> >
+    <input type="hidden" name="user2_id" value = <%= 2 %> >
+    <input type="hidden" name="team2" value = <%= 2 %> >
+
     <input type="hidden" name="type" value = <%= "singles" %> >
+
+
+
+
+
+
     <input name="message" value = <%= nil  %> >
     <button type="submit">Issue Request</button> 
   </form>

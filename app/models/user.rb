@@ -88,7 +88,7 @@ class User < ActiveRecord::Base
     if match_results.where.not(result: nil).any? 
       100 * (calc_wins.to_f/calc_total_plays.to_f).round(2) 
     else
-      "50%"
+      "0"
     end
   end
 
