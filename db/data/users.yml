@@ -1,25 +1,80 @@
-"test_01":
-  email: "test_01@email.com"
-  password: "pass01"
-  img_path: 
-  bio: "Tester 1's bio."
-"test_02":
-  email: "test_02@email.com"
-  password: "pass02"
-  img_path: 
-  bio: "Tester 2's bio."
-"test_03":
-  email: "test_03@email.com"
-  password: "pass03"
-  img_path: 
-  bio: "Tester 3's bio."
-"test_04":
-  email: "test_04@email.com"
-  password: "pass04"
-  img_path: 
-  bio: "Tester 4's bio."
-"test_05":
-  email: "test_05@email.com"
-  password: "pass05"
-  img_path: 
-  bio: "Tester 5's bio."
+"Andy":
+  email: "andy@badass_coder.com"
+  password: "a"
+  img_path: "Andy.jpg"
+  bio: "I'm a bad ass coder.  I will also destroy you at the table."
+"Coleson":
+  email: "coleslaw@shredded_cabbage.com"
+  password: "a"
+  img_path: "Coleson.jpg"
+  bio: "I'm always ready for a game.  My name sounds like a shredded cabbage salad."
+"Connor":
+  email: "connor@water_damage.com"
+  password: "a"
+  img_path: "Connor.jpg"
+  bio: "Foos is the bomb!"
+"Dennis":
+  email: "dennis@the_menace.com"
+  password: "a"
+  img_path: "Dennis.jpg"
+  bio: "Call me Dennis the Menace.  I'm deadly with the 5-bar."
+"Elaya":
+  email: "Elaya@lighthouse.ca"
+  password: "a"
+  img_path: "Elaya.jpg"
+  bio: "I love to play."
+"Grant":
+  email: "grant@red_eyes.com"
+  password: "a"
+  img_path: "Grant.jpg"
+  bio: "I might be a vampire.  Late nights are my thing."
+"Jarad":
+  email: "jarad@lucky_goals.com"
+  password: "a"
+  img_path: "Jarad.jpg"
+  bio: "I like a fast paced game.  Watch out for my frequent lucky goals."
+"Joe":
+  email: "iron_joe@foos4life.com"
+  password: "a"
+  img_path: "Joe.jpg"
+  bio: "The call me Iron Joe.  You'll find out why at the foos table."
+"Jonathan":
+  email: "jon@webdesigner.com"
+  password: "a"
+  img_path: "Jonathan.jpg"
+  bio: "I'm a bad ass CSS developer.  I will eat you alive in foosball"
+"Kay":
+  email: "kay@lighthouse.ca"
+  password: "a"
+  img_path: "Kay.jpg"
+  bio: "I might look like a nice girl but don't be fooled."
+"Kenny":
+  email: "kenny_g@saxaphone.com"
+  password: "a"
+  img_path: "Kenny.jpg"
+  bio: "I'll kick your ass at foos then serenade you with my sax."
+"Michael":
+  email: "mike@foos4life.com"
+  password: "a"
+  img_path: "Michael.jpg"
+  bio: "My defence is awesome.  I'll show you how we do it accross the pond."
+"Nicholas":
+  email: "nick@eat_my_shorts.com"
+  password: "a"
+  img_path: "Nicholas.jpg"
+  bio: "Foosball is my middle name."
+"Tyne":
+  email: "tyne@what_tyne_is_it.com"
+  password: "a"
+  img_path: "Ryne.jpg"
+  bio: "I have colorful hair and a colorful personality."
+"Sam":
+  email: "sam@seuss.ham"
+  password: "a"
+  img_path: "Sam.jpg"
+  bio: "I will not eat them Sam I am."
+"Samantha":
+  email: "samantha@lighthouse.ca"
+  password: "a"
+  img_path: "Samantha.jpg"
+  bio: "Play against me at your own risk."

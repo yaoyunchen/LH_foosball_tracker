@@ -8,7 +8,7 @@ Text
   <h1 class='title'>Match Invites</h1>
 
     <ul>
-      <% @invite_array.each do |invite| %>
+      <% @invite_hash_array.each do |invite| %>
       <p>
         <%= invite[:username] %>, 
         <%= invite[:category] %>
