@@ -1,30 +1,28 @@
 class MatchInvite < ActiveRecord::Base
-  belongs_to :match_request
+  belongs_to :match
   belongs_to :user
 
   validates :user_id,
     numericality: {only_integer: true}
 
-  validates :match_request_id,
+  validates :match_id,
     numericality: {only_integer: true}
 
-  validates :team,
+  validates :side,
     presence: true
 
-  after_update :create_match
+   after_update :check_if_ready
 
   private
 
-    def create_match
-      all_invites = MatchInvite.where(match_request_id: self.match_request_id)
+    def check_if_ready
+      all_invites = MatchInvite.where(match_id: self.match_id)
 
       if all_users_ready?(all_invites)
         #Once all users are ready, create the match.
-        Match.create!(
-          match_request_id: self.match_request_id
+        Match.find_by(id: self.match_id).update!(
+          status: "set"
         )
-        #Change status of request to accepted.
-        MatchRequest.find_by(id: self.match_request_id).update!(status: "accepted")
       end
     end
 

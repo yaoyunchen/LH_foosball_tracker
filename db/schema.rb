@@ -13,19 +13,30 @@
 
 ActiveRecord::Schema.define(version: 20160128074417) do
 
-  create_table "match_invites", force: :cascade do |t|
-    t.integer "match_request_id", null: false
-    t.integer "user_id",          null: false
-    t.string  "team",             null: false
-    t.boolean "accept"
+  create_table "doubles_results", force: :cascade do |t|
+    t.integer "match_id", null: false
+    t.integer "team_id",  null: false
+    t.integer "win"
+    t.integer "loss"
   end
 
-  add_index "match_invites", ["match_request_id"], name: "index_match_invites_on_match_request_id"
+  add_index "doubles_results", ["match_id"], name: "index_doubles_results_on_match_id"
+  add_index "doubles_results", ["team_id"], name: "index_doubles_results_on_team_id"
+
+  create_table "match_invites", force: :cascade do |t|
+    t.integer  "match_id",   null: false
+    t.integer  "user_id",    null: false
+    t.string   "side",       null: false
+    t.boolean  "accept"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "match_invites", ["match_id"], name: "index_match_invites_on_match_id"
   add_index "match_invites", ["user_id"], name: "index_match_invites_on_user_id"
 
-  create_table "match_requests", force: :cascade do |t|
+  create_table "matches", force: :cascade do |t|
     t.integer  "user_id",    null: false
-    t.integer  "match_id"
     t.string   "category",   null: false
     t.string   "status"
     t.string   "message"
@@ -33,21 +44,20 @@ ActiveRecord::Schema.define(version: 20160128074417) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "match_results", force: :cascade do |t|
+  create_table "singles_results", force: :cascade do |t|
     t.integer "match_id", null: false
     t.integer "user_id",  null: false
-    t.string  "team",     null: false
-    t.integer "result"
+    t.string  "side",     null: false
+    t.integer "win"
+    t.integer "loss"
   end
 
-  add_index "match_results", ["match_id"], name: "index_match_results_on_match_id"
-  add_index "match_results", ["user_id"], name: "index_match_results_on_user_id"
+  add_index "singles_results", ["match_id"], name: "index_singles_results_on_match_id"
+  add_index "singles_results", ["user_id"], name: "index_singles_results_on_user_id"
 
-  create_table "matches", force: :cascade do |t|
-    t.integer  "match_request_id"
-    t.string   "status"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+  create_table "teams", force: :cascade do |t|
+    t.integer "doubles_result_id"
+    t.string  "members"
   end
 
   create_table "users", force: :cascade do |t|

@@ -9,34 +9,44 @@ class CreateInitialTables < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    create_table :match_requests do |t|
+
+    create_table :matches do |t|
       t.belongs_to :user, null: false
-      t.references :match
       t.string :category, null: false # singles, doubles
-      t.string :status  #nil, "failed", "accepted"
+      t.string :status # set (default), cancelled, over
       t.string :message
       t.timestamps null: false
     end
 
-    create_table :match_invites do |t|
-      t.belongs_to :match_request, index: true, null: false
-      t.belongs_to :user, index: true, null: false
-      t.string :team, null: false
-      t.boolean :accept # null, true, false
-    end
 
-    create_table :matches do |t|
-      t.references :match_request
-      t.string :status # set (default), cancelled, over
+    create_table :match_invites do |t|
+      t.belongs_to :match, index: true, null: false
+      t.belongs_to :user, index: true, null: false
+      t.string :side, null: false
+      t.boolean :accept # null, true, false
       t.timestamps null: false
     end
 
-    create_table :match_results do |t|
+
+    create_table :singles_results do |t|
       t.belongs_to :match, index: true, null: false
       t.belongs_to :user, index: true, null: false
-      t.string :team, null: false # 1, 2, or custom team name
-      t.integer :result # -1: loss, 0: cancelled, 1: win
+      t.string :side, null: false
+      t.integer :win
+      t.integer :loss
     end
 
+
+    create_table :doubles_results do |t|
+      t.belongs_to :match, index: true, null: false
+      t.belongs_to :team, index: true, null: false
+      t.integer :win
+      t.integer :loss
+    end
+
+    create_table :teams do |t|
+      t.references :doubles_result
+      t.string :members
+    end
   end
 end

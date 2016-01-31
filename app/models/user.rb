@@ -1,9 +1,8 @@
 class User < ActiveRecord::Base
-  #include BCrypt
-
-  has_many :match_requests
+  
+  has_many :matches
   has_many :match_invites
-  has_many :match_results
+  has_many :singles_results
   
   validates :username, 
     presence: true,
@@ -18,36 +17,26 @@ class User < ActiveRecord::Base
   validates :password, 
     presence: true
 
-
-  # def pass
-  #   @pass ||= Password.new(password)
-  # end
-
-  # def pass=(new_pass)
-  #   @pass = Password.create(new_pass)
-  #   self.password = @pass
-  # end
-
   #Creates a match request when a user challenges player(s).
-  def issue_request(players, message = nil)
+  def issue_match(players, message = nil)
     type = players.count == 1 ? "singles" : "doubles"
 
-    match_request = self.match_requests.create!(
+    match = self.matches.create!(
       category: type,
       message: message
     )
     
-    send_invites(players, match_request.id)
+    send_invites(players, match.id)
   end
 
   #Sends invite to player(s) challenged.
-  def send_invites(players, request_id)
+  def send_invites(players, match_id)
     begin
       #Register the current user in the MatchInvite table.
       self_invite = self.match_invites.new(
-        match_request_id: request_id, 
+        match_id: match_id, 
         user_id: self.id,
-        team: "1",
+        side: "1",
         accept: true
       )
 
@@ -55,9 +44,9 @@ class User < ActiveRecord::Base
       player_invites = []
       players.each do |player|
         player_invites << MatchInvite.new(
-          match_request_id: request_id, 
+          match_id: match_id, 
           user_id: player[:user_id],
-          team: player[:team]
+          side: player[:side]
         )
       end
 
@@ -68,78 +57,83 @@ class User < ActiveRecord::Base
       end
     rescue ActiveRecord::RecordInvalid
       #Change the match request to show that the invites failed.
-      MatchRequest.find_by(id: request_id).update!(status: "failed")
+      Match.find_by(id: request_id).update!(status: "cancelled")
     end  
   end
 
   #Lets the user accept match invites.
-  def accept_invite(match_request_id)
-    @invite = MatchInvite.find_by(match_request_id: match_request_id, user_id: self.id, accept: nil)
+  def accept_invite(match_id)
+    @invite = MatchInvite.find_by(match_id: match_id, user_id: self.id, accept: nil)
     @invite.update!(accept: true)
   end
 
   #Lets the user decline match invites.  Once an invite is declined, all other related invites in the request will be set to false.
-  def decline_invite(match_request_id)
-    MatchInvite.where(match_request_id: match_request_id).update_all(accept: false)
-    MatchRequest.find_by(id: match_request_id).update!(status: "failed")
+  def decline_invite(match_id)
+    MatchInvite.where(match_id: match_id).update_all(accept: false)
+    Match.find_by(id: match_id).update!(status: "cancelled")
   end
 
 
-  #Calculates user's wins
-  def calc_wins
-    User.find_by(id: self.id).match_results.where(result: 1).select(:result).count 
+  #Calculates user's singles wins.
+  def singles_wins
+    singles_results.sum(:win) 
   end
 
-
-  #Calculates user's losses
-  def calc_losses
-    User.find_by(id: self.id).match_results.where(result: -1).select(:result).count
+  #Calculates user's singles losses.
+  def singles_losses
+    singles_results.sum(:loss)
   end
 
+  #Calculate's user's total singles games played.
+  def singles_total_plays
+    singles_results.count
+  end
 
-  #Calculate's user's W/L ratio
-  def calc_ratio
-    if self.username == "Rosy"
-      "100000000000000000000000"
-    else
-      if match_results.where.not(result: nil).any? 
-        100 * (calc_wins.to_f/calc_total_plays.to_f).round(2) 
+  #Calculate's user's ratio.
+  def singles_ratio
+    return "OVER 9000" if self.username == "Rosy"
+    if singles_results.any? 
+      100 * (singles_wins.to_f/singles_total_plays.to_f).round(2) 
       else
         "0.0"
       end
     end
   end
 
+  #Returns an array of all the user's teams.
+  def get_teams
+    Team.where("members LIKE (?) OR members LIKE (?)", "#{self.id},%", "%,#{self.id}")
+  end
 
-  #Calculate's user's total games played
-  def calc_total_plays
-    User.find_by(id: self.id).match_results.where.not("result = 0 OR result IS NULL").count
+  #Calculates user's doubles wins.
+  def doubles_wins
+    total_wins = 0
+    get_teams.each{ |team| total_wins += team.doubles_results.sum(:win)}
+    total_wins
+  end
+
+  #Calculate's user's doubles losses.
+  def doubles_losses
+    total_wins = 0
+    get_teams.each {|team| total_wins += team.doubles_results.sum(:win)}
+    total_wins
   end
 
 
-  def get_wins(matches)
-    MatchResult.where('user_id = (?) and match_id in (?) and result = 1', self.id, matches).count
+  #Calculate's user's doubles plays.
+  def doubles_total_plays
+    total_plays = 0
+    get_teams.each {|team| total_plays += team.doubles_results.count}
+    total_plays
   end
 
-  def get_losses(matches)
-    MatchResult.where('user_id = (?) and match_id in (?) and result = -1', self.id, matches).count
-  end
-
-  def get_matches(matches)
-    MatchResult.where('user_id = (?) and match_id in (?)', self.id, matches).count
-  end
-
-  def get_ratio(matches)
-    if self.username == "Rosy"
-      "OVER 9000.00"
+  #Calculate's user's doubles ratio.
+  def doubles_ratio
+    return "OVER 9000" if self.username == "Rosy"
+    if doubles_total_plays > 0
+      100 * (doubles_wins.to_f/doubles_total_plays.to_f).round(2) 
     else
-      if match_results.where.not(result: nil).any? 
-        100 * (get_wins(matches).to_f/get_matches(matches).to_f).round(2) 
-      else
-        "0.0"
-      end
+      "0.0"
     end
-
   end
- 
 end

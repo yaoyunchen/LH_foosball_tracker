@@ -1,79 +1,90 @@
 class Match < ActiveRecord::Base
-  has_one :match_request
-  has_many :match_results
-
-  validates :match_request_id,
-    numericality: {only_integer: true}
+  belongs_to :user
+  has_many :match_invites
+  has_many :singles_results
+  has_many :doubles_results
 
   validates :status,
-    inclusion: {within: [nil, "cancelled", "over"]}
+    inclusion: {within: [nil, "set","cancelled", "over"]}
 
-  after_create :create_match_results
- 
   #Once the match is over, set the record status to over and update winners and losers.
-  def match_over(winning_team)
+  def match_over(winning_side)
     Match.find_by(id: self.id).update!(status: "over")
   
-    update_results(winning_team)
+    create_results(winning_side)
   end
 
   #Updates participants based on if the game was cancelled.
   def match_cancelled
     Match.find_by(id: self.id).update!(status: "cancelled")
-    begin
-      players = MatchResult.where(match_id: self.id)
-      MatchResult.transaction do
-        players.each {|player| player.update!(result: 0)}
-      end
-    end 
   end
 
-  #Updates participants based on the winning team.
-  def update_results(winning_team)
-    begin
-      match = Match.find_by(id: self.id)
-      if match.status == "over"
-        winners = MatchResult.where(match_id: match.id, team: winning_team)
-        losers = MatchResult.where(match_id: match.id).where.not(team: winning_team)
-      
-        MatchResult.transaction do
-          winners.each {|winner| winner.update!(result: 1)}
-          losers.each {|loser| loser.update!(result: -1)}
-        end
-      end
-    rescue ActiveRecord::RecordInvalid
-      self.status = "cancelled"
-    end 
+  #Create results after match is over.
+  def create_results(winning_side)
+    self.category == "singles" ? create_singles_results(winning_side) : create_doubles_results(winning_side)
   end
 
-  def last_ten_matches
-
-
-
-  end
-
- private 
-    #Once a match is created, link the User and Match tables through MatchResults.
-    def create_match_results
-      begin
-        all_users = MatchInvite.where(match_request_id: match_request_id)
-
-        results = []
-        all_users.each do |user|
-          results << MatchResult.new(
-            match_id: self.id,
-            user_id: user.user_id,
-            team: user.team
-          )
-        end
-
-        MatchResult.transaction do
-          results.each {|participant| participant.save!}
-        end
-      rescue ActiveRecord::RecordInvalid
-        self.status = "cancelled"
-      end 
+  def create_singles_results(winning_side)
+    players = MatchInvite.where(match_id: self.id)
+    players.each do |player|
+      win = 0
+      loss = 0
+      player.side == "1" ? win += 1 : loss += 1
+      puts win
+      puts loss
+      SinglesResult.create!(
+        match_id: self.id,
+        user_id: player.user_id,
+        side: player.side,
+        win: win,
+        loss: loss
+      )
     end
+  end
+
+  def create_doubles_results(winning_side)
+    teams = update_teams
+
+    teams.each do |team|
+      members = Team.find_by(members: team)
+      win = 0
+      loss = 0
+      team == winning_side ? win += 1 : loss += 1
+
+      members.doubles_results.create!(
+        match_id: self.id,
+        team_id: members.id,
+        win: win,
+        loss: loss
+      )
+    end
+
+  end
+
+  def create_team(members)
+    Team.create!(
+      members: members
+    )
+  end
+
+  def update_teams
+    players = MatchInvite.where(match_id: self.id)
+
+    left = players.where(side: players[0].side).order(:user_id)
+    right = players.where.not(side: players[0].side).order(:user_id)
+
+    left_team = "#{left[0].user_id},#{left[1].user_id}"
+    right_team = "#{right[0].user_id},#{right[1].user_id}"
+
+    create_team(left_team) unless Team.find_by(members: left_team)
+
+    create_team(right_team) unless Team.find_by(members: right_team)
+    
+    result = [left_team, right_team]
+  end
+
+
+    
 end
 
 

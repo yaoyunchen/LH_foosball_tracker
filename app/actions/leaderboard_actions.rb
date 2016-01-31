@@ -92,7 +92,6 @@ def build_latest_array
     winner = team_left[0].result == 1 ? team_left[0].team : team_right[0].team
     matches_array << {time: match.updated_at, left: players_left, right: players_right, winner: winner}
   end
-
   matches_array
 end
 
@@ -119,6 +118,7 @@ def build_most_active_array
     matches_array << result if result[:total] > 0
   end
   matches_array
+  erb :'leaderboard/index'
 end
 
 def get_games
