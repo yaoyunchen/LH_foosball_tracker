@@ -28,6 +28,9 @@ function max_selection_reached(match_category, player_count) {
 function remove_player_selection(select_button) {
   var player_copy = $(select_button).parents('li');
   var user_id = player_copy.attr('data-player-id');
+  var teammate_id = $('#SelectedPlayers input[name="teammate"]').first().attr('value');
+
+  if (user_id == teammate_id) $('#SelectedPlayers').removeClass('has-teammate');
 
   // Will clear the teammate input value if the player being removed
   //   is the person who was set as the teammate.
@@ -69,6 +72,11 @@ function teammate_option_visibility(user_id, show) {
   }
 }
 
+function move_teammate_to_top(user_id) {
+  var teammate = $('#SelectedPlayers li[data-player-id="' + user_id + '"]');
+  teammate.detach().prependTo('.js-selected-players');
+}
+
 function teammate(user_id) {
   if (teammate_exists()) {
     var current_teammate_id = $('#SelectedPlayers input[name="teammate"]').first().attr('value');
@@ -76,7 +84,9 @@ function teammate(user_id) {
   } 
 
   $('#SelectedPlayers input[name="teammate"]').first().attr('value', user_id);
+  $('#SelectedPlayers').addClass('has-teammate');
   teammate_option_visibility(user_id, false);
+  move_teammate_to_top(user_id);
 }
 
 function set_up_team(selected_player) {
@@ -122,7 +132,7 @@ $('.js-select-player[data-action="select"]').click(function() {
 $('#SelectedPlayers').on('click', '.js-select-player[data-action="unselect"]', function() {
   remove_player_selection(this);
   disable_match_creation();
-  allow_further_selections(); 
+  allow_further_selections();
 
   var player_count = $('#SelectedPlayers .custom-media-profile').length; 
   if (player_count == 0) {

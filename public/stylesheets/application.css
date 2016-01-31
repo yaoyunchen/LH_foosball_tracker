@@ -2452,3 +2452,11 @@ li {
 
 .is-selected {
   display: none; }
+
+.custom-teammate-title {
+  display: none; }
+
+.has-teammate .custom-teammate-title {
+  display: block; }
+.has-teammate .custom-selected-players li:nth-child(2) {
+  border-top: 3px solid rgba(211, 214, 219, 0.5); }
