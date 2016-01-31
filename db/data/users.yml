@@ -28,10 +28,10 @@
   password: "a"
   img_path: "/images/grant.jpg"
   bio: "I might be a vampire.  Late nights are my thing."
-"Jarad":
-  email: "jarad@lucky_goals.com"
+"Jared":
+  email: "jared@lucky_goals.com"
   password: "a"
-  img_path: "/images/jarad.jpg"
+  img_path: "/images/jared.jpg"
   bio: "I like a fast paced game.  Watch out for my frequent lucky goals."
 "Joe":
   email: "iron_joe@foos4life.com"
@@ -66,7 +66,7 @@
 "Tyne":
   email: "tyne@what_tyne_is_it.com"
   password: "a"
-  img_path: "/images/ryne.jpg"
+  img_path: "/images/tyne.jpg"
   bio: "I have colorful hair and a colorful personality."
 "Sam":
   email: "sam@seuss.ham"
