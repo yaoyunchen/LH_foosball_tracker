@@ -1,4 +1,3 @@
-const starting_user_num = 2;
 const max_singles_selection = 1;
 const max_doubles_selection = 3;
 
@@ -30,6 +29,8 @@ function remove_player_selection(select_button) {
   var player_copy = $(select_button).parents('li');
   var user_id = player_copy.attr('data-player-id');
 
+  // Will clear the teammate input value if the player being removed
+  //   is the person who was set as the teammate.
   $('#SelectedPlayers').find('input[value="' + user_id + '"]').attr('value', '');
 
   var selected_player = $('.js-player-selection-list li[data-player-id="' + user_id + '"]');
@@ -54,6 +55,10 @@ function disable_further_selections() {
   $('.js-select-player[data-action="select"]').addClass('is-disabled'); 
 }
 
+function add_teammate(user_id) {
+  $('#SelectedPlayers').find('input[name="teammate"]').attr('value', user_id);
+}
+
 $('.js-select-player[data-action="select"]').click(function() {
   var match_type = $('.js-match-type.is-active').attr('data-type');
   var player_count = $('#SelectedPlayers .custom-media-profile').length;
@@ -75,6 +80,10 @@ $('.js-select-player[data-action="select"]').click(function() {
   }
 
   player_count = $('#SelectedPlayers .custom-media-profile').length;
+
+  if (match_type == 'doubles' && player_count == 1) {
+    add_teammate(user_id);
+  }
 
   if (max_selection_reached(match_type, player_count)) {
     disable_further_selections();
