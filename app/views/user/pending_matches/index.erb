@@ -1,14 +1,43 @@
-<h1>Pending Matches</h1>
+<div class="container custom-container-with-subnav">
+  <section class='section'>
+    <div class='container'>
+      <h1 class='title'>Record Match</h1>
 
-Fix for doubles
+      <ul>
+        <% @match_hash_array.each do |match| %> 
+          <li class='media custom-media-profile'>
+            <% match[:other_players].each do |player| %>
+              <figure class='media-image'>
+                <% unless player[:img_path] == nil %>
+                  <img src="<%= player[:img_path] %>">
+                <% else %>
+                  <img src="/images/avatar.png">
+                <% end %>
+              </figure>
 
-<% @match_hash_array.each do |match| %>
-  <p>Game Type: <%= match[:type] %></p>
-  <p>You are on team <%= match[:team] %></p>
-  <form method="POST" action="/user/pending_matches/<%= match[:match_id]%>">
-      <input type="hidden" name="_method" value ="put">
+              <p class="subtitle"><%= player[:username] %>, team <%= player[:team]%></p>
+            <% end %>
 
-      <button type="submit" name="choice" value='cancelled'> Cancel </button>
-      <button type="submit" name="choice" value='end'> End Game </button>
-  </form>
-<% end %>
+            <div class='media-content'>
+              <p><%= match[:type] %> game</p>
+              <p>Accepted at <%= match[:accepted_on]%> </p>
+              <p>You are on team <%= match[:team] %></p>
+            </div>
+
+            <div>
+              <form method="POST" action="/user/pending_matches/<%= match[:match_id]%>">
+                <input type="hidden" name="_method" value ="put">
+
+                <button type="submit" name="choice" value='cancelled' class="button icon is-medium custom-circle-button"><i class="fa fa-times"></i></button>
+                
+                <button type="submit" name="choice" value='end' class="button icon is-medium custom-circle-button"><i class="fa fa-check"></i></button>
+              </form>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </section>
+  <%= erb :_sub_nav %>
+</div>
+

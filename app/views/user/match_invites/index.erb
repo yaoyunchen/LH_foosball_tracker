@@ -1,4 +1,31 @@
-<h1>List of all them invites</h1>
+<div class="container custom-container-with-subnav">
+
+<section class="section">
+  <div class="container">
+
+  <h1 class='title'>Match Invites</h1>
+
+    <ul>
+      <% @invite_array.each do |invite| %>
+        <li class='media custom-media-profile'>
+
+          <figure class='media-image'><img src='/images/player_04.jpg'></figure>
+          <div class='media-content'>
+            <p>Sent 1 days ago</p>
+            <p>From JarHead</p>
+          </div>
+
+          <div>
+            <a class="button icon is-medium custom-circle-button"><i class="fa fa-times"></i></a>
+            <a class="button icon is-medium custom-circle-button"><i class="fa fa-check"></i></a>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</section>
+
+
 
 <% @invite_array.each do |invite| %>
   -------------------------------------
@@ -22,3 +49,9 @@
     </form>
   </p>
 <% end %>
+
+
+<%= erb :'_sub_nav' %>
+
+</div>
+

@@ -1,0 +1,54 @@
+<section class="section">
+  <div class="container">
+    <h1 class='title is-3'>Rules</h1>
+    <p class='subtitle is-5'>These are the recreational foosball rules</p>
+
+    <ul>
+      <li>A match is over when player reaches either 5 or 10 goals.</li>
+      <li>Number of goals must be determined before the match.</li>
+      <li>First player/team to 5 or 10 goals wins the game.</li>
+      <li>A player must win by 2 points.</li>
+      <li>No spinning the rods. If the rod does a 360 without hitting the ball you lose a point.</li>
+    </ul>
+
+     <h3 class='title is-5'>Addional Rules</h3>
+
+     <ul>
+      <li>If a ball goes into the goal legally it is a point, no matter who hit it.</li>
+      <li>Serve the ball through the hole. You or the other player must touch the ball once before a legal shot is taken.</li>
+      <li>If no touch is made, the goal is not legal.</li>
+      <li>After goals, the team scored upon serves the ball.</li>
+      <li>If the ball goes off the table it is re-served by the team last scored upon.</li>
+      <li>If the ball stops moving and you can't reach it then is is re-served by the team last scored upon.</li>
+      <li>You can't reach into the table for the ball while it is in play.</li>
+      <li>You can only have the ball for 15 seconds in any one place.</li>
+    </ul>
+
+    <p>Watch this youtube video for detailed rules. These are ITSF rules.</p>
+
+    <div id="ytplayer"></div>
+    <script>
+      // Load the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/player_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // Replace the 'ytplayer' element with an <iframe> and
+      // YouTube player after the API code downloads.
+      var player;
+      function onYouTubePlayerAPIReady() {
+        player = new YT.Player('ytplayer', {
+          height: '390',
+          width: '640',
+          videoId: 'mo6wl0rdoVk'
+        });
+      }
+    </script>
+
+    <p>More details on ISTF rules:
+
+    <a href="http://www.table-soccer.org/rules/doc">ITSF Rulebook</a> </p>
+
+  </div>
+</section>

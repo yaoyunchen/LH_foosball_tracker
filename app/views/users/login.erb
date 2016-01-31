@@ -1,38 +1,17 @@
 <section class="hero is-primary">
   <div class="hero-content">
     <div class="container">
-      <h1 class="title">Sign Up</h1>
+      <h1 class="title">Log In</h1>
     </div>
   </div>
 </section>
 <section class="section">
-<% if @user && @user.errors.any? %>
-  <section class="section">
-    <div class="container is-warning">
-      <p class="title is-5">
-        <strong>Please fix the following issues:</strong>
-      </p>
-      <ul>
-        <% @user.errors.full_messages.each do |message| %>
-          <li><%= message%></li>
-        <% end %>
-      </ul>
-    </div>
-  </section>
-<% end %>
   
 <div class="container">
-  <form method="POST" action="/users/new" class="form-login" >
-
-    <h2 class="subtitle">Email:</h2>
-    <p class="control is-withicon">
-      <input class="input" type="email" placeholder="Email" name="email" value="<%@user && @user.email%>" required>
-      <i class="fa fa-envelope"></i>
-    </p>
-
+  <form method="POST" action="/users/login" class="form-login">
     <h2 class="subtitle">Username:</h2>
     <p class="control">
-      <input class="input" type="text" placeholder="username" name="username" value="<%@user && @user.username%>" required>
+      <input class="input" type="text" name="username" placeholder="Username" value="<%= @user && @user.username %>" required>
     </p>
 
     <h2 class="subtitle">Password:</h2>
@@ -40,41 +19,14 @@
       <input class="input" type="password" placeholder="Password" name="password" value="<%@user && @user.password%>" required>
       <i class="fa fa-lock"></i>
     </p>
-      
 
     <p class="control">
-      <h2 class="subtitle">Bio (optional):</h2>
-      <textarea class="textarea" type="text" placeholder="Bio (optional)" name="bio" value="<%@user && @user.bio%>"></textarea>
     </p>
-    <p class="control">
-    </p>
+
     <div class="is-centered">
-      <button class="button is-primary" type="submit" >Sign Up</button>
-      <button class="button" type="submit"><a href="/">Cancel</a></button>
+      <button type="submit" class="btn is-primary">Login</button>
     </div>
   </form>
 
   </div>
 </section>
-
-
-
-
-
-
-
-<h1>Login</h1>
-<hr/>
-
-<form method="POST" action="/users/login" class="form-login">
-  <div class="form-group">
-      <label for="inputUsername">Username</label>
-      <input type="text" name="username" placeholder="Username" value="<%= @user && @user.username %>" required>
-  </div>
-  <div class="form-group">
-      <label for="inputPassword">Password</label>
-      <input type="password" name="password" placeholder="Password" value="<%= @user && @user.password %>" required>
-  </div>
-  <button type="submit" class="btn btn-primary">Login</button>
-  <button class="btn"><a href="/users/signup" style="text-decoration:none">Sign Up</a></button>
-</form>

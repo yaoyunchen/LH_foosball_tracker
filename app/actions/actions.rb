@@ -21,38 +21,19 @@ get '/' do
   
   players = []
   @last_matches = Match.where(status: "over").last(@limit)
-  
-  # last_matches.each do |match|
-    
-  #   players << MatchResult.where(match_id: match.id) 
-
-
-
-  #   players.each do |player|
-  #     team = players.first.team
-  #     team_left = players.where(team: 1) 
-  #     team_right = players.where.not(team: 1) 
-
-  #     @team_left_player_names = ""
-  #     team_left.each do |player|
-  #       @team_left_player_names <<  User.find(player.user_id).username
-  #     end
-    
-  #     @team_right_player_names = ""
-  #     team_right.each do |player|
-  #       @team_right_player_names <<  User.find(player.user_id).username
-  #     end
-  #   end
-    
-
-  # end
-
-
-
-
-
-  erb :index
+  redirect '/leaderboard'
 end
+
+#Goes to the rules/introduction page.
+get '/intro' do
+  erb :'intro'
+end
+
+
+
+
+
+
 
 
 
