@@ -35,9 +35,7 @@ function remove_player_selection(select_button) {
   var user_id = player_copy.attr('data-player-id');
   var teammate_id = $('#SelectedPlayers input[name="teammate"]').first().attr('value');
 
-  if (user_id == teammate_id) {
-    $('#SelectedPlayers').removeClass('has-teammate');  
-  }
+  if (user_id == teammate_id) $('#SelectedPlayers').removeClass('has-teammate');
 
   // Will clear the teammate input value if the player being removed
   //   is the person who was set as the teammate.
@@ -152,5 +150,30 @@ $('#SelectedPlayers').on('click', '.js-set-teammate', function() {
   var player_copy = $(this).parents('li');
   var user_id = player_copy.attr('data-player-id');  
   teammate(user_id);
+});
+$('#MatchInvites .js-cancel-invite').click(function() {
+  var match_id = $(this).parent().attr('data-match-id');
+
+  $.post('',
+  {
+    _method: 'put',
+    match_id: match_id,
+    accept: false
+  },
+  function(){
+  });
+});
+
+$('#MatchInvites .js-accept-invite').click(function() {
+  var match_id = $(this).parent().attr('data-match-id');
+
+  $.post('',
+  {
+    _method: 'put',
+    match_id: match_id,
+    accept: true
+  },
+  function(){
+  });
 });
 });

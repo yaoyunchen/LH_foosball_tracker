@@ -31,6 +31,7 @@ task "js:compile" do
   paths = []
   paths << 'assets/js/_main_nav.js'
   paths << 'assets/js/_select_players_to_invite.js'
+  paths << 'assets/js/_respond_to_invite.js'
 
   File.open('public/javascript/application.js', 'w') do |file|
 

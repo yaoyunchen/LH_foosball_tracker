@@ -80,3 +80,8 @@ post '/dev/match/doubles-selection' do
   p params
   redirect '/dev/match/doubles-selection'
 end
+
+put '/dev/match/requests' do
+  p params
+  redirect '/dev/match/requests'
+end
