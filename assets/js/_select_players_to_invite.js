@@ -1,8 +1,3 @@
-$(document).ready(function() {
-$('#header-toggle').click(function() {
-  $(this).toggleClass('is-active');
-  $('#header-menu').toggleClass('is-active');
-});
 const max_singles_selection = 1;
 const max_doubles_selection = 3;
 
@@ -140,5 +135,4 @@ $('#SelectedPlayers').on('click', '.js-set-teammate', function() {
   var player_copy = $(this).parents('li');
   var user_id = player_copy.attr('data-player-id');  
   teammate(user_id);
-});
 });

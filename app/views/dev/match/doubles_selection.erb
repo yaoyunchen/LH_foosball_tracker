@@ -7,8 +7,8 @@
       <h1 class='title'>Create Match</h1>
       <div class="tabs is-toggle is-right">
         <ul>
-          <li class='is-active js-match-type' data-type='singles'><a>Singles</a></li>
-          <li class='js-match-type' data-type='doubles'><a>Doubles</a></li>
+          <li class='js-match-type' data-type='singles'><a>Singles</a></li>
+          <li class='is-active js-match-type' data-type='doubles'><a>Doubles</a></li>
         </ul>
       </div>
     </div>
@@ -28,7 +28,10 @@
       <form method='post'>
         <div class='is-centered'>
           <input type="hidden" name="user2" value="">
-          <button class='button'>Send Invites</button>
+          <input type="hidden" name="user3" value="">
+          <input type="hidden" name="user4" value="">
+          <input type="hidden" name="teammate" value="">
+          <button class='button is-disabled'>Send Invites</button>
         </div>
       </form>
     </div>
@@ -46,6 +49,7 @@
             </div>
           </div>
           <div>
+            <a class="button icon is-medium custom-circle-button is-hidden js-set-teammate" data-action='set'><i class="fa fa-arrow-up"></i></a>
             <a class="button icon is-medium custom-circle-button js-select-player" data-action='select'><i class="fa fa-plus"></i></a>
           </div>
         </li>
@@ -61,6 +65,7 @@
             </div>
           </div>
           <div>
+            <a class="button icon is-medium custom-circle-button is-hidden js-set-teammate" data-action='set'><i class="fa fa-arrow-up"></i></a>
             <a class="button icon is-medium custom-circle-button js-select-player" data-action='select'><i class="fa fa-plus"></i></a>
           </div>
         </li>
@@ -76,6 +81,7 @@
             </div>
           </div>
           <div>
+            <a class="button icon is-medium custom-circle-button is-hidden js-set-teammate" data-action='set'><i class="fa fa-arrow-up"></i></a>
             <a class="button icon is-medium custom-circle-button js-select-player" data-action='select'><i class="fa fa-plus"></i></a>
           </div>
         </li>
@@ -91,6 +97,7 @@
             </div>
           </div>
           <div>
+            <a class="button icon is-medium custom-circle-button is-hidden js-set-teammate" data-action='set'><i class="fa fa-arrow-up"></i></a>
             <a class="button icon is-medium custom-circle-button js-select-player" data-action='select'><i class="fa fa-plus"></i></a>
           </div>
         </li>
