@@ -29,8 +29,6 @@ class User < ActiveRecord::Base
     send_invites(players, match.id)
   end
   
-
-  [{user_id:, side: }]
   #Sends invite to player(s) challenged.
   def send_invites(players, match_id)
     begin

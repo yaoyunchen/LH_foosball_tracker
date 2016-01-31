@@ -6,7 +6,6 @@
     <table class='table custom-table-stats'>
       <thead>
         <tr>
-          <th>R.</th>
           <th>Name</th>
           <th>Wins</th>
           <th>Losses</th>
@@ -31,15 +30,11 @@
         <% end %>
       </tbody>
     </table>
-    <div class='content'>
-      <p><a>View entire ranking</a></p>
-    </div>
-<!--
+
     <h2 class='title is-5'>Doubles - Top 10</h2>
     <table class='table custom-table-stats custom-table-hide-img'>
       <thead>
         <tr>
-          <th>R.</th>
           <th>Team</th>
           <th>Wins</th>
           <th>Losses</th>
@@ -47,42 +42,27 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>
-            <img src='/images/player_04.jpg'>
-            <img src='/images/player_02.jpg'>
-            <div>
-              <span>JarHead</span> 
-              <span>NickBozzMan</span>
-            </div>
-          </td>
-          <td>13</td>
-          <td>9</td>
-          <td>59.1%</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>
-            <img src='/images/player_01.jpg'>
-            <img src='/images/player_03.jpg'>
-            <div>
-              <span>ColesoON</span> 
-              <span>MikeIke</span>
-            </div>
-          </td>
-          <td>12</td>
-          <td>13</td>
-          <td>48%</td>
-        </tr>
-        
+        <% @doubles.each do |team| %>
+          <tr>
+            <td>
+              <% team[:team].each do |member| %>
+                <% unless member[:img_path] == nil %>
+                  <img src="<%= member[:img_path] %>">
+                <% else %>
+                  <img src="/images/avatar.png">
+                <% end %>
+                <%= member[:username] %>
+              <% end %>
+            </td>
+            <td><%= team[:wins] %></td>
+            <td><%= team[:losses] %></td>
+            <td><%= team[:ratio] %></td>
+          </tr>
+        <% end %>
       </tbody>
     </table>
-    <div class='content'>
-      <p><a>View entire ranking</a></p>
-    </div>
 
-<h2 class='title is-5'>Latest Matches</h2>
+    <h2 class='title is-5'>Latest Matches</h2>
     <table class='table custom-table-stats custom-table-hide-img'>
       <thead>
         <tr>
@@ -92,40 +72,79 @@
           <th>Winner</th>
         </tr>
       </thead>
+
       <tbody>
-        <% @latest.each do |user| %>
+        <% @latest.each do |match| %>
           <tr>
             <td>
-              <%= user[:time] %>
+              <%= match[:time] %>
             </td>
-            <td>
-              <% user[:left].each do |player| %>
-                <% unless player[:img_path] == nil %>
-                  <img src="<%= player[:img_path] %>">
+            
+            <% if match[:type] == "singles" %>
+              <td>
+                <% unless match[:team][0][:img_path] == nil %>
+                  <img src="<%= match[:team][0][:img_path] %>">
                 <% else %>
                   <img src="/images/avatar.png">
                 <% end %>
-                <%= player[:username] %>
-              <% end %>
-            </td>
-            <td>
-              <% user[:right].each do |player| %>
-                <% unless player[:img_path] == nil %>
-                  <img src="<%= player[:img_path] %>">
+                <%= match[:team][0][:username] %>
+              </td>
+
+              <td>
+                <% unless match[:team][1][:img_path] == nil %>
+                <img src="<%= match[:team][1][:img_path] %>">
                 <% else %>
                   <img src="/images/avatar.png">
                 <% end %>
-                <%= player[:username] %>
-              <% end %>
-            </td>
-            <td>
-              Team <%= user[:winner] %>
-            </td>
+                <%= match[:team][1][:username] %>
+              </td>
+
+              <td>
+                <% unless match[:winner][:img_path] == nil %>
+                  <img src="<%= match[:winner][:img_path] %>">
+                <% else %>
+                  <img src="/images/avatar.png">
+                <% end %>
+                <%= match[:winner][:username] %>
+              </td>
+            <% else %>
+              <td>
+                <% match[:team][0].each do |member| %>
+                  <% unless member[:img_path] == nil %>
+                    <img src="<%= member[:img_path] %>">
+                  <% else %>
+                    <img src="/images/avatar.png">
+                  <% end %>
+                  <%= member[:username] %>
+                <% end %>
+              </td>
+              <td>
+                <% match[:team][1].each do |member| %>
+                  <% unless member[:img_path] == nil %>
+                    <img src="<%= member[:img_path] %>">
+                  <% else %>
+                    <img src="/images/avatar.png">
+                  <% end %>
+                  <%= member[:username] %>
+                <% end %>
+              </td>
+              <td>
+                <% match[:winner].each do |member| %>
+                  <% unless member[:img_path] == nil %>
+                    <img src="<%= member[:img_path] %>">
+                  <% else %>
+                    <img src="/images/avatar.png">
+                  <% end %>
+                  <%= member[:username] %>
+                <% end %>
+              </td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>
     </table>
 
+    
     <h2 class='title is-5'>Top Active Players</h2>
     <table class='table custom-table-stats'>
       <thead>
@@ -158,7 +177,6 @@
         <% end %>
       </tbody>
     </table>
-    -->
   </div>
 </section>
 
