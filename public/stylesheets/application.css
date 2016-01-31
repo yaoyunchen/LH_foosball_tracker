@@ -2448,7 +2448,7 @@ li {
   .custom-table-hide-img img {
     display: inline-block; } }
 .is-hidden {
-  display: none; }
+  display: none !important; }
 
 .is-selected {
   display: none; }

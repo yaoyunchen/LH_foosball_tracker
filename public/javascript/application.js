@@ -6,10 +6,10 @@ $('#header-toggle').click(function() {
 const max_singles_selection = 1;
 const max_doubles_selection = 3;
 
-function allow_player_selection(match_type, player_count) {
-  if (match_type == "singles" && player_count < max_singles_selection) {
+function allow_player_selection(match_category, player_count) {
+  if (match_category == "singles" && player_count < max_singles_selection) {
     return true;
-  } else if (match_type == "doubles" && player_count < max_doubles_selection) {
+  } else if (match_category == "doubles" && player_count < max_doubles_selection) {
     return true;
   } else {
     return false;
@@ -20,10 +20,10 @@ function available_user_number() {
   return $('#SelectedPlayers input[value=""]').first().attr('name');
 }
 
-function max_selection_reached(match_type, player_count) {
-  if (match_type == "singles" && player_count == max_singles_selection) {
+function max_selection_reached(match_category, player_count) {
+  if (match_category == "singles" && player_count == max_singles_selection) {
     return true;
-  } else if (match_type == "doubles" && player_count == max_doubles_selection) {
+  } else if (match_category == "doubles" && player_count == max_doubles_selection) {
     return true;
   } else {
     return false;
@@ -60,15 +60,43 @@ function disable_further_selections() {
   $('.js-select-player[data-action="select"]').addClass('is-disabled'); 
 }
 
-function add_teammate(user_id) {
-  $('#SelectedPlayers').find('input[name="teammate"]').attr('value', user_id);
+function teammate_exists() {
+  res = $('#SelectedPlayers input[name="teammate"]').first().attr('value');
+  return res.length;
+}
+
+function teammate_option_visibility(user_id, show) {
+  option = $('#SelectedPlayers li[data-player-id="' + user_id + '"] .js-set-teammate').first()
+  if (show) {
+    option.removeClass('is-hidden'); 
+  } else {
+    option.addClass('is-hidden'); 
+  }
+}
+
+function teammate(user_id) {
+  if (teammate_exists()) {
+    var current_teammate_id = $('#SelectedPlayers input[name="teammate"]').first().attr('value');
+    teammate_option_visibility(current_teammate_id, true);
+  } 
+
+  $('#SelectedPlayers input[name="teammate"]').first().attr('value', user_id);
+  teammate_option_visibility(user_id, false);
+}
+
+function set_up_team(selected_player) {
+  if (teammate_exists()) {
+    teammate_option_visibility(selected_player, true);
+  } else {
+    teammate(selected_player);
+  }
 }
 
 $('.js-select-player[data-action="select"]').click(function() {
-  var match_type = $('.js-match-type.is-active').attr('data-type');
+  var match_category = $('.js-match-type.is-active').attr('data-type');
   var player_count = $('#SelectedPlayers .custom-media-profile').length;
 
-  if (allow_player_selection(match_type, player_count)) {
+  if (allow_player_selection(match_category, player_count)) {
     $('#SelectedPlayers').removeClass('is-hidden')
     var selected_player = $(this).parents('li');
     var user_id = $(selected_player).attr('data-player-id');
@@ -86,11 +114,9 @@ $('.js-select-player[data-action="select"]').click(function() {
 
   player_count = $('#SelectedPlayers .custom-media-profile').length;
 
-  if (match_type == 'doubles' && player_count == 1) {
-    add_teammate(user_id);
-  }
+  if (match_category == 'doubles') set_up_team(user_id);
 
-  if (max_selection_reached(match_type, player_count)) {
+  if (max_selection_reached(match_category, player_count)) {
     disable_further_selections();
     allow_match_request();
   }
@@ -108,5 +134,11 @@ $('#SelectedPlayers').on('click', '.js-select-player[data-action="unselect"]', f
     $('#SelectedPlayers').addClass('is-hidden');
   }
   
+});
+
+$('#SelectedPlayers').on('click', '.js-set-teammate', function() {
+  var player_copy = $(this).parents('li');
+  var user_id = player_copy.attr('data-player-id');  
+  teammate(user_id);
 });
 });
