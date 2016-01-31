@@ -9,7 +9,7 @@ class Match < ActiveRecord::Base
 
   #Once the match is over, set the record status to over and update winners and losers.
   def match_over(winning_side)
-    Match.find_by(id: self.id).update!(status: "over")
+    self.update!(status: "over")
   
     create_results(winning_side)
   end

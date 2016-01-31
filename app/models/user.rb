@@ -28,7 +28,9 @@ class User < ActiveRecord::Base
     
     send_invites(players, match.id)
   end
+  
 
+  [{user_id:, side: }]
   #Sends invite to player(s) challenged.
   def send_invites(players, match_id)
     begin
@@ -94,9 +96,8 @@ class User < ActiveRecord::Base
     return "OVER 9000" if self.username == "Rosy"
     if singles_results.any? 
       100 * (singles_wins.to_f/singles_total_plays.to_f).round(2) 
-      else
-        "0.0"
-      end
+    else
+      "0.0"
     end
   end
 

@@ -12,28 +12,29 @@ end
 
 #Submits form for requesting a match.
 post '/user/match_request' do
-  type = params[:type]         #Singles or doubles
+  params[:teammate] ? type = "doubles" : type = "singles"
+  
   message = params[:message]   #Trash talk some shit.
 
-  player2 = {
-    id: params[:user2_id],
-    team: params[:user2_team]
-  }
+  player_array = []
 
-  player3 = {
-    id: params[:user3_id],
-    team: params[:user3_team]
-  }
+  if type =="singles"
+    player_array << {user_id: params[:user2], side: 1}
+  else
+    player_array << {user_id: params[:user2], side: 2} 
 
-  player4 = {
-    id: params[:user4_id],
-    team: params[:user4_team]
-  }
+    player_array << {user_id: params[:user2], side: 2} 
+    
+    player_array << {user_id: params[:user2], side: 2} 
 
-  player_array = [player2, player3, player4]
+    player_array.each do |ele|
+      ele[:side] = 1 if ele[:user_id] == params[:teammate]
+    end
+  end
 
   current_user.issue_request(player_array, type, message)
 
+  #Should redirect to pending page.
   redirect '/'
 end
 

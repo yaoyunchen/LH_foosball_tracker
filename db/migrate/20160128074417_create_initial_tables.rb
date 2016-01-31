@@ -45,7 +45,6 @@ class CreateInitialTables < ActiveRecord::Migration
     end
 
     create_table :teams do |t|
-      t.references :doubles_result
       t.string :members
     end
   end
