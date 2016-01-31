@@ -24,3 +24,24 @@ task "all" do
   Rake::Task["db:migrate"].invoke
   Rake::Task["db:seed"].invoke
 end
+
+desc 'compile jquery files'
+task "js:compile" do
+
+  paths = []
+  paths << 'assets/js/_singles_player_selection.js'
+
+  File.open('public/javascript/application.js', 'w') do |file|
+
+    file.puts '$(document).ready(function() {'
+
+    paths.each do |path|
+      content = File.read(path)
+      file.puts content
+    end
+
+    file.puts '});'
+
+  end
+
+end
