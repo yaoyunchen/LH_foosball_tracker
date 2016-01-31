@@ -109,3 +109,12 @@ post '/dev/match' do
   p params
   redirect '/dev/match'
 end
+
+get '/dev/match/doubles-selection' do
+  erb :'/dev/match/doubles_selection'
+end
+
+post '/dev/match/doubles-selection' do
+  p params
+  redirect '/dev/match/doubles-selection'
+end
