@@ -3,26 +3,42 @@ $('#header-toggle').click(function() {
   $(this).toggleClass('is-active');
   $('#header-menu').toggleClass('is-active');
 });
-
-$('.js-select-player').click(function() {
-  // Duplicate selection into selected list
-  el = $(this).parents('li');
-  $(el).clone().appendTo('#CreateInvites > .js-selected-players');
-
-  user_id = $(el).attr('data-player-id');
-  user_number = $('#CreateInvites .custom-media-profile').length;
+$('.js-select-player[data-action="select"]').click(function() {
+    var match_type = $('.js-match-type.is-active').attr('data-type');
+    var player_count = $('#SelectedPlayers .custom-media-profile').length;
   
-  // team number is based on the game type
-  teammate = false;
-    
-  // Add hidden input with userid values
-  $("#CreateInvites .button").before('<input type="hidden" name="user' + user_number + '[:id]" value="' + user_id + '">');
-  $("#CreateInvites .button").before('<input type="hidden" name="user' + user_number + '[:teammate]" value="' + teammate + '">');
+    if (match_type == "singles" && player_count == 0) {
+      
+      var selected_player = $(this).parents('li');
+      var user_id = $(selected_player).attr('data-player-id');
+      $('#SelectedPlayers').removeClass('is-hidden')
+      $('#SelectedPlayers').find('input[name="user2[:id]"]').attr('value', user_id);
 
-  // hide selected
-  $(el).toggleClass('is-selected');
+      // Duplicate player into selection area
+      var player_copy = selected_player.clone().appendTo('#SelectedPlayers > .js-selected-players');
+      player_copy.find('.js-select-player').attr('data-action', 'unselect');
+      player_copy.find('.fa-plus').removeClass('fa-plus').addClass('fa-times');
 
-  // limit the matchmaking options based on game type
-    
+      selected_player.toggleClass('is-selected');
+      $('.js-select-player[data-action="select"]').addClass('is-disabled');
+
+    }
+
+});
+
+
+$('#SelectedPlayers').on('click', '.js-select-player[data-action="unselect"]', function() {
+  var player_copy = $(this).parents('li');
+  var user_id = player_copy.attr('data-player-id');
+
+  $('#SelectedPlayers').find('input[name="user2[:id]"]').attr('value', '');
+  $('#SelectedPlayers').addClass('is-hidden')
+
+  var selected_player = $('.js-player-selection-list li[data-player-id="' + user_id + '"]');
+  selected_player.toggleClass('is-selected');
+
+  $('.js-select-player[data-action="select"]').removeClass('is-disabled');
+
+  player_copy.remove();
 });
 });

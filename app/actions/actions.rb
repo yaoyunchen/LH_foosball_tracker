@@ -104,3 +104,8 @@ end
 get '/dev/leaderboard' do
   erb :'/dev/leaderboard/index'
 end
+
+post '/dev/match' do
+  p params
+  redirect '/dev/match'
+end
