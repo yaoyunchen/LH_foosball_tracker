@@ -106,7 +106,7 @@ def build_latest_array
 
   matches_array = []
   latest_matches.each do |match|
-    time = match.updated_at.localtime
+    time = match.pretty_time
     type = match.category
     winner = ""
     teams = []
