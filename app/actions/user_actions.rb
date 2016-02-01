@@ -267,19 +267,21 @@ get '/user/pending_matches/choose_winner' do
   redirect '/users/login' unless current_user
 
   #match = Match.find params[:match_id]
-  match = Match.find(1)
+  match = Match.find(31)
 
   team_left = []
   team_right = []
 
   if match.category == "singles"
-    left_player = SinglesResult.find_by(match_id: match.id,user_id: current_user.id)
+
+
+    left_player = MatchInvite.find_by(match_id: match.id, user_id: current_user.id)
     team_left << {
       username: User.find_by(id: left_player.user_id).username,
       img_path: User.find_by(id: left_player.user_id).img_path,
       side: left_player.side
     }
-    right_player = SinglesResult.where(match_id: match.id).where.not(user_id: current_user.id)
+    right_player = MatchInvite.where(match_id: match.id).where.not(user_id: current_user.id)
     team_right << {
       username: User.find_by(id: right_player[0].user_id).username,
       img_path: User.find_by(id: right_player[0].user_id).img_path,
@@ -287,6 +289,12 @@ get '/user/pending_matches/choose_winner' do
     }
   else
 
+    left_players = ""
+
+
+
+
+    right_players = ""
 
   end
 
@@ -305,8 +313,8 @@ get '/user/pending_matches/choose_winner' do
   #   player = User.find_by(id: member.user_id)
   #   players_right << {username: player.username, img_path: player.img_path, team: member.team}
   # end
-
-  @result = {
+  @result = []
+  @result << {
     left: team_left, 
     right: team_right, 
     id: match.id

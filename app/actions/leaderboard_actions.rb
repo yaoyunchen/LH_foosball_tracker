@@ -1,4 +1,4 @@
-LIMIT = 10
+LIMIT = 9
 
 get '/leaderboard' do
 
@@ -16,7 +16,7 @@ get '/leaderboard' do
 
 
   doubles_array = build_doubles_array
-  doubles_array = doubles_array.sort_by {|k| k[:ratio] * k[:plays]}
+  doubles_array = doubles_array.sort_by {|k| k[:ratio] * k[:plays]}.reverse
   @doubles = []
   count = 0
   doubles_array.each do |ele|
@@ -42,7 +42,6 @@ get '/leaderboard' do
 
   most_active_array = build_most_active_array
   @actives = most_active_array.sort_by {|k| [:total]}
-  @doubles = []
 
   erb :'leaderboard/index'
 end
