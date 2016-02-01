@@ -141,22 +141,22 @@ end
 Timecop.travel(Date.today - 1)
 
 # Unaccpted Invites Single
-@nick = User.find(13)
+@jonathan = User.find(9)
 rand(1..3).times do
- ex = User.all.reject{ |e| e == @nick}
+ ex = User.all.reject{ |e| e == @jonathan}
  player = ex.sample
- opponents = [{user_id: @nick.id, side: 2}]
+ opponents = [{user_id: @jonathan.id, side: 2}]
  player.issue_match(opponents)
 end
 
 # Unaccpted Invites Double
 rand(1..3).times do
-  player = @users.sample
+  player = @users.reject { |e| e == @jonathan }.sample
   ex = User.all.reject{ |e| e == player}
   opp1 = ex.sample
   ex2 = User.all.reject{ |e| e == player || e == opp1}
   opp2 = ex2.sample
-  opponents = [{user_id: opp1.id, side: 1}, {user_id: opp2.id, side: 2}, {user_id: @nick.id, side: 2}]
+  opponents = [{user_id: opp1.id, side: 1}, {user_id: opp2.id, side: 2}, {user_id: @jonathan.id, side: 2}]
   player.issue_match(opponents)
 end
 
