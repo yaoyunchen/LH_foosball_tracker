@@ -12,20 +12,18 @@
       <% end %>
     </div>
 
-    <!-- Hamburger menu (on mobile) -->
     <span id="header-toggle" class="header-toggle">
       <span></span>
       <span></span>
       <span></span>
     </span>
 
-    <!-- Right side -->
     <div id="header-menu" class="header-right header-menu">
       <span class="header-item">
-        <a href="/intro">Intro</a>
+        <a href="/leaderboard">Leaderboard</a>
       </span>
       <span class="header-item">
-        <a href="/leaderboard">Leaderboard</a>
+        <a href="/intro">Intro</a>
       </span>
       <% if current_user %>
         <span class="header-item">
@@ -33,7 +31,7 @@
         </span>
 
         <span class="header-item">
-          <a class="button" href="/logout">Log out of <%=current_user.username %></a>
+          <a class="button" href="/logout"></a>
         </span>
       <% else %>
         <span class="header-item">
