@@ -4,117 +4,195 @@ end
 
 
 #Get a form to request a match when the '+' is pressed while selecting opponent(s).
-get '/user/match_request/new' do
+get '/user/match/singles/new' do
   redirect '/users/login' unless current_user
-  @users = User.all
-  erb :'match_request/new'
+  
+  users = User.where.not(id: current_user.id)
+  @players_array = []
+
+  users.each do |user|
+    @players_array << {
+      id: user.id,
+      username: user.username,
+      img_path: user.img_path,
+      wins: user.singles_wins,
+      losses: user.singles_losses,
+      ratio: user.singles_ratio 
+    }
+  end
+
+  @players_arrays
+
+  erb :'match/singles/new'
 end
 
 #Submits form for requesting a match.
-post '/user/match_request' do
-  params[:teammate] ? type = "doubles" : type = "singles"
+post '/user/match/singles/new' do
+  type = "singles"
   
   message = params[:message]   #Trash talk some shit.
 
-  player_array = []
-
-  if type =="singles"
-    player_array << {user_id: params[:user2], side: 1}
-  else
-    player_array << {user_id: params[:user2], side: 2} 
-
-    player_array << {user_id: params[:user2], side: 2} 
-    
-    player_array << {user_id: params[:user2], side: 2} 
-
-    player_array.each do |ele|
-      ele[:side] = 1 if ele[:user_id] == params[:teammate]
-    end
-  end
-
-  current_user.issue_request(player_array, type, message)
+  player_array = [{user_id: params[:user2], side: 1}]
+  
+  current_user.issue_match(player_array, message)
 
   #Should redirect to pending page.
   redirect '/'
 end
 
 
+get '/user/match/doubles/new' do
+  redirect '/users/login' unless current_user
+  
+  users = User.where.not(id: current_user.id)
+  @players_array = []
+
+  users.each do |user|
+    @players_array << {
+      id: user.id,
+      username: user.username,
+      img_path: user.img_path,
+      wins: user.doubles_wins,
+      losses: user.doubles_losses,
+      ratio: user.doubles_ratio 
+    }
+  end
+
+  @players_arrays
+
+  erb :'match/doubles/new'
+end
+
+
+#Submits form for requesting a match.
+post '/user/match/doubles/new' do 
+  message = params[:message]   #Trash talk some shit.
+
+  player_array = []
+
+  player_array << {user_id: params[:user2], side: 2} 
+
+  player_array << {user_id: params[:user3], side: 2} 
+  
+  player_array << {user_id: params[:user4], side: 2} 
+
+  player_array.each do |ele|
+    ele[:side] = 1 if ele[:user_id] == params[:teammate]
+  end
+
+  current_user.issue_match(player_array, message)
+
+  #Should redirect to pending page.
+  redirect '/'
+end
+
+
+
 ####################
+
 
 
 #Gets a list of invites sent to the user.
 get '/user/match_invites' do
   redirect '/users/login' unless current_user
   
-  invites = current_user.match_invites.where(accept: nil).order(match_request_id: :desc)
+  invites = current_user.match_invites.where(accept: nil).order(match_id: :desc)
   
   @invite_array = []
 
   invites.each do |invite|
     id = invite.id
-    team = invite.team
+    side = invite.side
     issuer = ""
-    match_type = ""
+    category = ""
     message = ""
-    left_players = ""
-    right_players = ""
+    sent = ((Time.now - invite.created_at)/86400).to_i
 
-    request = MatchRequest.find_by(id: invite.match_request_id)
+    match = Match.find_by(id: invite.match_id)
     
-    issuer = request.user.username
-    match_type << request.category
-    message << request.message if request.message 
-    
-    player_array = MatchInvite.where(match_request_id: request.id)
-    
+    issuer = match.user.username
+    img_path = match.user.img_path
+    category = match.category
+    message << match.message if match.message 
 
-    team_left = player_array.where(team: team)
-    players_left = []
-    team_left.each do |member|
-      player = User.find_by(id: member.user_id)
-      players_left << {username: player.username, img_path: player.img_path}
-    end
-
-    team_right = player_array.where.not(team: team)
-    players_right = []
-    team_right.each do |member|
-      player = User.find_by(id: member.user_id)
-      players_right << {username: player.username, img_path: player.img_path}
-    end
-
-    info = {
+    @invite_array << {
       id: id,
-      team: team,
+      side: side,
       issuer: issuer,
-      match_type: match_type,
-      message: message,
-      left_players: players_left,
-      right_players: players_right
+      img_path: img_path,
+      category: category,
+      message: message, 
+      sent: sent
     }
-
-    @invite_array << info
   end
   @invite_array
 
-  erb :'user/match_invites/index'
+  erb :'/user/match_invites/index'
 end
 
-# #Gets a notification to accept or decline a specific invite in the invites list.
-get '/user/match_invites/:match_invite_id' do
-  redirect '/users/login' unless current_user
-end
 
 #Submits a form for accepting or declining a specific invite in the invites list.
-put '/user/match_invites/:match_invite_id' do
-  @match_invite = MatchInvite.find params[:match_invite_id]
-  
-  @match_invite.update!(accept: params[:choice])
+put '/user/match_invites' do
+  @match_invite = MatchInvite.find(params[:match_invite_id].to_i)
+  match_id = @match_invite.match_id
+
+  p params
+  if params[:accept] == "true"
+    current_user.accept_invite(match_id)
+  else
+    current_user.decline_invite(match_id)
+  end
 
   redirect '/'
 end
 
 
 ####################
+
+get '/user/pending_invites' do
+  redirect '/users/login' unless current_user
+
+  own_invites = current_user.matches.where(status: nil).order(created_at: :desc)
+  
+  @invites_array = []
+
+  own_invites.each do |invite|
+    
+    sent = ((Time.now - invite.created_at)/86400).to_i
+
+    invitee_array = []
+    invitees = MatchInvite.where(match_id: invite.id).where.not(user_id: current_user.id)
+    invitees.each do |user|
+      invitee_array << {
+        username: User.find_by(id: user.user_id).username,
+        img_path: User.find_by(id: user.user_id).img_path
+      }
+    end
+    invitee_array
+
+    @invites_array << {
+      id: MatchInvite.find_by(match_id: invite.id, user_id: current_user.id).id,
+      category: invite.category,
+      sent: sent,
+      invitees: invitee_array
+    }
+  end
+
+  @invites_array
+  erb :'/user/pending_invites/index'
+end
+
+
+put '/user/pending_invites' do
+  @match_invite = MatchInvite.find(params[:match_invite_id].to_i)
+  match_id = @match_invite.match_id
+  Match.find_by(id: match_id).match_cancelled
+
+  redirect '/'
+end
+
+####################
+
 
 
 #Show user's pending matches.
