@@ -2,7 +2,7 @@
   <div class="container">
     <div class="tabs is-toggle is-centered">
       <ul>
-        <li class='<%= 'is-active' if request.path_info == '/user/match/singles/new'%>'><a href='/user/match/singles/new'>Create</a></li>
+        <li class='<%= 'is-active' if request.path_info == '/user/match/singles/new' || request.path_info == '/user/match/doubles/new' %>'><a href='/user/match/singles/new'>Create</a></li>
         <li class='<%= 'is-active' if request.path_info == '/user/match_invites'%>'><a href='/user/match_invites'>Invites</a></li>
         <li class='<%= 'is-active' if request.path_info == '/user/pending_invites'%>'><a href='/user/pending_invites'>Pending</a></li>
         <li class='<%= 'is-active' if request.path_info == '/user/pending_matches'%>'><a href='/user/pending_matches' >Record</a></li>
