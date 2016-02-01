@@ -104,7 +104,6 @@ get '/user/match_invites' do
     issuer = ""
     category = ""
     message = ""
-    # sent = ((Time.now - invite.created_at)/86400).to_i
     sent = invite.relative_time
 
     match = Match.find_by(id: invite.match_id)
@@ -159,7 +158,8 @@ get '/user/pending_invites' do
 
   own_invites.each do |invite|
     
-    sent = ((Time.now - invite.created_at)/86400).to_i
+    sent = invite.relative_time
+    # sent = ((Time.now - invite.created_at)/86400).to_i
 
     invitee_array = []
     invitees = MatchInvite.where(match_id: invite.id).where.not(user_id: current_user.id)
