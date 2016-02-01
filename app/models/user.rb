@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
       end
     rescue ActiveRecord::RecordInvalid
       #Change the match request to show that the invites failed.
-      Match.find_by(id: request_id).update!(status: "cancelled")
+      Match.find_by(id: match_id).update!(status: "cancelled")
     end  
   end
 

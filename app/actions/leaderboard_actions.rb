@@ -3,7 +3,7 @@ LIMIT = 10
 get '/leaderboard' do
 
   singles_array = build_singles_array
-  singles_array = singles_array.sort_by {|k| k[:ratio]}.reverse
+  singles_array = singles_array.sort_by {|k| k[:ratio] * k[:plays]}.reverse
   @singles = []
   count = 0
   singles_array.each do |ele|
@@ -16,7 +16,7 @@ get '/leaderboard' do
 
 
   doubles_array = build_doubles_array
-  doubles_array = doubles_array.sort_by {|k| [:ratio]}
+  doubles_array = doubles_array.sort_by {|k| k[:ratio] * k[:plays]}
   @doubles = []
   count = 0
   doubles_array.each do |ele|
@@ -41,7 +41,8 @@ get '/leaderboard' do
 
 
   most_active_array = build_most_active_array
-  @actives = most_active_array
+  @actives = most_active_array.sort_by {|k| [:total]}
+  @doubles = []
 
   erb :'leaderboard/index'
 end
@@ -59,7 +60,8 @@ def build_singles_array
       img_path: user.img_path,
       wins: user.singles_wins,
       losses: user.singles_losses,
-      ratio: user.singles_ratio
+      ratio: user.singles_ratio,
+      plays: user.singles_total_plays
     }
     players_info_array << user_info
   end
@@ -89,6 +91,7 @@ def build_doubles_array
       wins: team.team_wins,
       losses: team.team_losses,
       ratio: team.team_ratio,
+      plays: team.team_total_plays
     }
     team_info_array << team_info
   end

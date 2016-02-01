@@ -1,0 +1,68 @@
+<div class="container custom-container-with-subnav">
+
+<section class="section">
+  <div class="container">
+
+    <div class="container custom-start-game">
+      <h1 class='title'>Create Match</h1>
+      <div class="tabs is-toggle is-right">
+        <ul>
+          <li class='is-active js-match-type' data-type='singles'><a>Singles</a></li>
+          <li class='js-match-type' data-type='doubles'><a href='/user/match/doubles/new'>Doubles</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class='content'>
+      <form method='get'>
+        <p class="control is-grouped">
+          <input class="input" type="text" placeholder="Find players">
+          <a class="button is-info">Search</a>
+        </p>
+      </form>
+    </div>
+
+
+    <div id='SelectedPlayers' class='notification custom-is-dark custom-add-players is-hidden'>
+      <ul class='js-selected-players'>
+      </ul>
+      <form method='post'>
+        <div class='is-centered'>
+          <input type="hidden" name="user2" value="">
+          <button class='button'>Send Invite</button>
+        </div>
+      </form>
+    </div>
+
+    <div class='content js-player-selection-list'>
+      <ul>
+        <% @players_array.each do |player| %>
+          <li class='media custom-media-profile' data-player-id='<%= player[:id] %>'>
+            <figure class='media-image'>
+              <% unless player[:img_path] == nil %>
+                <img src="<%= player[:img_path] %>">
+              <% else %>
+                <img src="/images/avatar.png">
+              <% end %>
+            </figure>
+            <div class='media-content'>
+              <%= player[:username] %>
+              <div class='custom-media-profile-stats'>
+                <span><%= player[:wins] %> W</span>
+                <span><%= player[:losses] %> L</span>
+                <span><%= player[:ratio] %>%</span>
+              </div>
+            </div>
+            <div>
+              <a class="button icon is-medium custom-circle-button js-select-player" data-action='select'><i class="fa fa-plus"></i></a>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<%= erb :'/_sub_nav' %>
+
+</div>

@@ -27,7 +27,7 @@ post '/users/login' do
   
   unless @user == nil
     session[:user_id] = @user.id
-    redirect '/user/match_request/new'
+    redirect '/user/match/singles/new'
   else
     erb :'users/login'
   end
