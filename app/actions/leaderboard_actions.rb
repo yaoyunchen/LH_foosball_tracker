@@ -41,8 +41,16 @@ get '/leaderboard' do
 
 
   most_active_array = build_most_active_array
-  @actives = most_active_array.sort_by {|k| [:total]}
-
+  most_active_array = most_active_array.sort_by {|k| k[:total]}.reverse
+  @actives = []
+  count = 0
+  most_active_array.each do |ele|
+    if count <= LIMIT
+      count +=1
+      @actives << ele
+    end
+  end
+  @actives
   erb :'leaderboard/index'
 end
 
