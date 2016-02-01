@@ -133,6 +133,7 @@ end
 
 #Submits a form for accepting or declining a specific invite in the invites list.
 put '/user/match_invites' do
+  p params
   @match_invite = MatchInvite.find(params[:match_invite_id].to_i)
   match_id = @match_invite.match_id
 
@@ -143,7 +144,7 @@ put '/user/match_invites' do
     current_user.decline_invite(match_id)
   end
 
-  redirect '/'
+  redirect '/user/match_invites'
 end
 
 
