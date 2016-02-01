@@ -84,7 +84,7 @@ class Match < ActiveRecord::Base
   end
 
   def pretty_time
-    time = updated_at.strftime("%I:%M %p").downcase
+    time = updated_at.localtime.strftime("%I:%M %p").downcase
     time.slice!(0) if time.starts_with?('0')
     time
   end

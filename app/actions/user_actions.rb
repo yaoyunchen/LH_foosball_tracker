@@ -220,7 +220,7 @@ get '/user/pending_matches' do
   
   your_matches.each do |match|
     category = match.category
-    time = match.updated_at
+    time = match.pretty_time
 
     your_side = MatchInvite.where(match_id: match.id).where(user_id: current_user.id)[0].side
 
