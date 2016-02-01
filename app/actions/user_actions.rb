@@ -36,8 +36,7 @@ post '/user/match/singles/new' do
   
   current_user.issue_match(player_array, message)
 
-  #Should redirect to pending page.
-  redirect '/'
+  redirect '/user/pending_invites'
 end
 
 
@@ -82,8 +81,7 @@ post '/user/match/doubles/new' do
 
   current_user.issue_match(player_array, message)
 
-  #Should redirect to pending page.
-  redirect '/'
+  redirect '/user/pending_invites'
 end
 
 
