@@ -14,15 +14,12 @@
                   <img src="/images/avatar.png">
                 <% end %>
               </figure>
-
-              <p class="subtitle"><%= player[:username] %>, team <%= player[:side]%></p>
+              <div class='media-content'>
+                <p><%= match[:category].capitalize %> against <%= player[:username] %></p>
+                <p>Accepted at <%= match[:time]%> </p>
+              </div>
+              
             <% end %>
-
-            <div class='media-content'>
-              <p><%= match[:category] %> game</p>
-              <p>Accepted at <%= match[:time]%> </p>
-              <p>You are on team <%= match[:your_side] %></p>
-            </div>
             
             <form method='post'>
               <input type='hidden' name='_method' value='put'>
