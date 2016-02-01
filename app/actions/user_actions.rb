@@ -190,7 +190,7 @@ put '/user/pending_invites' do
   match_id = @match_invite.match_id
   Match.find_by(id: match_id).match_cancelled
 
-  redirect '/'
+  redirect '/user/pending_invites'
 end
 
 ####################

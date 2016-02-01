@@ -21,9 +21,15 @@
               <p>Sent <%= invites[:sent] %> days ago</p>
               <p>To <%= invites[:invitees][0][:username] %></p>
             </div>
-            <div data-match-invite-id="<%= invites[:id] %>">
-              <a class="button icon is-medium custom-circle-button js-cancel-invite"><i class="fa fa-times"></i></a>
-            </div>
+            <form method='post'>
+              <input type='hidden' name='_method' value='put'>
+              <input type='hidden' name='match_invite_id' value='<%= invites[:id] %>
+              '>
+              <input type='hidden' name='accept' value='false'>
+              <button class="button icon is-medium custom-circle-button">
+                <i class="fa fa-times"></i>
+              </button>
+            </form>
           <% else %>
             <div class='custom-media-image-collection'>
               <% invites[:invitees].each do |user| %>
@@ -41,9 +47,15 @@
               <p>Sent <%= invites[:sent] %> days ago</p>
               <p>To <%= invites[:invitees][0][:username] %>, <%= invites[:invitees][1][:username] %>, <%= invites[:invitees][2][:username] %></p>
             </div>
-            <div data-match-invite-id="<%= invites[:id] %>">
-              <a class="button icon is-medium custom-circle-button js-cancel-invite"><i class="fa fa-times"></i></a>
-            </div>
+            <form method='post'>
+              <input type='hidden' name='_method' value='put'>
+              <input type='hidden' name='match_invite_id' value='<%= invites[:id] %>
+              '>
+              <input type='hidden' name='accept' value='false'>
+              <button class="button icon is-medium custom-circle-button">
+                <i class="fa fa-times"></i>
+              </button>
+            </form>          
           <% end %>
         </li>
       <% end %>
