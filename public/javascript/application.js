@@ -192,7 +192,7 @@ $('.js-cancel-match').click(function() {
 });
 
 $('.js-record-match').click(function() {
-  $.post('',
+  $.post('/user/pending_matches',
   {
     _method: 'put',
     match_id: match_id(this),

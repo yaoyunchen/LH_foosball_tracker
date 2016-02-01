@@ -6,7 +6,7 @@
       <ul>
         <% @match_hash_array.each do |match| %> 
           <li class='media custom-media-profile'>
-            <% match[:other_players].each do |player| %>
+            <% match[:players].each do |player| %>
               <figure class='media-image'>
                 <% unless player[:img_path] == nil %>
                   <img src="<%= player[:img_path] %>">
@@ -15,23 +15,18 @@
                 <% end %>
               </figure>
 
-              <p class="subtitle"><%= player[:username] %>, team <%= player[:team]%></p>
+              <p class="subtitle"><%= player[:username] %>, team <%= player[:side]%></p>
             <% end %>
 
             <div class='media-content'>
-              <p><%= match[:type] %> game</p>
-              <p>Accepted at <%= match[:accepted_on]%> </p>
-              <p>You are on team <%= match[:team] %></p>
+              <p><%= match[:category] %> game</p>
+              <p>Accepted at <%= match[:time]%> </p>
+              <p>You are on team <%= match[:your_side] %></p>
             </div>
 
-            <div>
-              <form method="POST" action="/user/pending_matches/<%= match[:match_id]%>">
-                <input type="hidden" name="_method" value ="put">
-
-                <button type="submit" name="choice" value='cancelled' class="button icon is-medium custom-circle-button"><i class="fa fa-times"></i></button>
-                
-                <button type="submit" name="choice" value='end' class="button icon is-medium custom-circle-button"><i class="fa fa-check"></i></button>
-              </form>
+            <div data-match-id="<%= match[:match_id] %>">
+              <a class="button icon is-medium custom-circle-button js-cancel-match"><i class="fa fa-times"></i></a>
+              <a class="button icon is-medium custom-circle-button js-record-match"><i class="fa fa-check"></i></a>
             </div>
           </li>
         <% end %>

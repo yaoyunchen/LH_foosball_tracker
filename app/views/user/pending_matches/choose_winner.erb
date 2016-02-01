@@ -1,13 +1,41 @@
+<div class="container custom-container-with-subnav">
+
+<section class='section'>
+  <div class='container'>
+    <h1 class='title'>Record Match</h1>
+
+    <ul>
+      <li class='media custom-media-profile'>
+        <figure class='media-image'><img src='/images/player_03.jpg'></figure>
+        <div class='media-content'>
+          <p>Accepted at 11:20 am</p>
+          <p>MikeIke</p>
+        </div>
+        <div data-match-id='99'>
+          <a class="button icon is-medium custom-circle-button js-cancel-match"><i class="fa fa-times"></i></a>
+          <a class="button icon is-medium custom-circle-button js-record-match"><i class="fa fa-check"></i></a>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+</section>
+
+
+<%= erb :'_sub_nav' %>
+
+</div>
+
 <section class='section'>
   <div class='container'>
     <h1 class='title'>Select Winner</h1>
 
     <div class="custom-select-winner">
 
-      <!--Load all of the left team's player images and names-->
       <% @result[:left].each do |player| %>
         <figure class='custom-select-player'>
-          <% unless player[:img_path] == nil %>
+          <% p player %>
+          <% if player[:img_path].nil? %>
             <img src="<%= player[:img_path] %>">
           <% else %>
             <img src="/images/avatar.png">
@@ -15,10 +43,10 @@
         </figure>
         <p><%= player[:username] %></p>
       <% end %>
-      <!--Load all of the right team's player images and names-->
+ 
       <% @result[:right].each do |player| %>
         <figure class='custom-select-player'>
-          <% unless player[:img_path] == nil %>
+          <% if player[:img_path].nil? %>
             <img src="<%= player[:img_path] %>">
           <% else %>
             <img src="/images/avatar.png">
@@ -32,13 +60,10 @@
       <form method="POST" action="/user/pending_matches/<%= @result[:id] %>/choose_winner/edit">
         <input type="hidden" name="_method" value="put">
 
-        <!--Goes back to the pending matches page. -->
         <a class="button icon is-medium custom-circle-button" href="/user/pending_matches"><i class="fa fa-arrow-left"></i></a>
 
         <% winner = "" %>
-        <!--Set the winner depending on which side is selected.-->
-
-        <!--Activates when a picture above is selected.-->
+ 
         <button type="submit" name="team" value="<%= winner %>" class="button icon is-medium is-disabled custom-circle-button"><i class="fa fa-check"></i></button>
       </form>
     </div>
