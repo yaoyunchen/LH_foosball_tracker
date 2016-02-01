@@ -19,6 +19,7 @@ group :development, :test do
   gem 'shotgun'
   gem 'sqlite3'
   gem 'database_cleaner'
+  gem 'timecop'
 end
 
 group :production do

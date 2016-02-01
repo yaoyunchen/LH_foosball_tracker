@@ -10,6 +10,8 @@ require 'sinatra/contrib/all' # Requires cookies, among other things
 
 require 'pry'
 
+require 'timecop'
+
 require 'yaml'
 require 'devise'
 require 'bcrypt'
