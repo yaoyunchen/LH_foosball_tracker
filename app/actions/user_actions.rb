@@ -257,7 +257,7 @@ put '/user/pending_matches' do
   p params
   if params[:status] == "cancelled"
     @match.match_cancelled
-    redirect '/'
+    redirect '/user/pending_matches'
   else
     redirect '/user/pending_matches/choose_winner'
   end
