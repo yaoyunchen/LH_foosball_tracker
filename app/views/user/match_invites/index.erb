@@ -25,12 +25,20 @@
             </div>
             <form method='post'>
               <input type='hidden' name='_method' value='put'>
+              <input type='hidden' name='match_invite_id' value='<%= invite[:id] %>
+              '>
+              <input type='hidden' name='accept' value='false'>
+                <button class="button icon is-medium custom-circle-button">
+                  <i class="fa fa-times"></i>
+                </button>
+            </form>
+            <form method='post'>
+              <input type='hidden' name='_method' value='put'>
               <input type='hidden' name='match_invite_id' value='<%= invite[:id] %>'>
-              <div data-match-invite-id="<%= invite[:id] %>">
+              <input type='hidden' name='accept' value='true'>
                 <button class="button icon is-medium custom-circle-button">
                   <i class="fa fa-check"></i>
                 </button>
-              </div>
             </form>
           </li>
         <% end %>
