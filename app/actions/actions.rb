@@ -85,3 +85,8 @@ put '/dev/match/requests' do
   p params
   redirect '/dev/match/requests'
 end
+
+put '/dev/match/pending' do
+  p params
+  redirect '/dev/match/pending'
+end

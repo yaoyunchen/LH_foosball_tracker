@@ -2,7 +2,7 @@ function match_invite_id(ele) {
   return $(ele).parent().attr('data-match-invite-id');
 }
 
-$('#MatchInvites .js-cancel-invite').click(function() {
+$('.js-cancel-invite').click(function() {
   $.post('',
   {
     _method: 'put',
@@ -13,7 +13,7 @@ $('#MatchInvites .js-cancel-invite').click(function() {
   });
 });
 
-$('#MatchInvites .js-accept-invite').click(function() {
+$('.js-accept-invite').click(function() {
   $.post('',
   {
     _method: 'put',
