@@ -67,7 +67,7 @@ def build_singles_array
       img_path: user.img_path,
       wins: user.singles_wins,
       losses: user.singles_losses,
-      ratio: user.singles_ratio,
+      ratio: user.singles_ratio.round(2),
       plays: user.singles_total_plays
     }
     players_info_array << user_info
@@ -97,7 +97,7 @@ def build_doubles_array
       team: users,
       wins: team.team_wins,
       losses: team.team_losses,
-      ratio: team.team_ratio,
+      ratio: team.team_ratio.round(2),
       plays: team.team_total_plays
     }
     team_info_array << team_info

@@ -139,6 +139,3 @@ DEPENDENCIES
   sqlite3
   timecop
   tux
-
-BUNDLED WITH
-   1.11.2
