@@ -16,9 +16,9 @@
               <% end %>
             </figure>
             <div class='media-content'>
-              <p>Sent <%= invite[:sent] %> days ago</p>
-              <p>From <%= invite[:issuer] %></p>
-              <p><%= invite[:category] %></p>
+              <p><%= invite[:category].capitalize %> from <%= invite[:issuer] %></p>
+              <p>Sent <%= invite[:sent] %></p>
+              
               <% unless invite[:message] == "" %>
                 <p>Message: <%= invite[:message] %></p>
               <% end %>

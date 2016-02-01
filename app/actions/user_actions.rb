@@ -104,7 +104,8 @@ get '/user/match_invites' do
     issuer = ""
     category = ""
     message = ""
-    sent = ((Time.now - invite.created_at)/86400).to_i
+    # sent = ((Time.now - invite.created_at)/86400).to_i
+    sent = invite.relative_time
 
     match = Match.find_by(id: invite.match_id)
     
