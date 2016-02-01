@@ -10,7 +10,7 @@
 
         <% match[:left].each do |player| %>
           <figure class='custom-select-player'>
-            <% if player[:img_path].nil? %>
+            <% unless player[:img_path] == nil %>
               <img src="<%= player[:img_path] %>">
             <% else %>
               <img src="/images/avatar.png">
@@ -20,7 +20,7 @@
         <% end %>
         <% match[:right].each do |player| %>
           <figure class='custom-select-player'>
-            <% if player[:img_path].nil? %>
+            <% unless player[:img_path] == nil %>
               <img src="<%= player[:img_path] %>">
             <% else %>
               <img src="/images/avatar.png">
@@ -28,16 +28,12 @@
           </figure>
           <p><%= player[:username] %></p>
         <% end %>
+
         <div class='is-centered'>
-        <form method="POST" action="/user/pending_matches/<%= match[:id] %>/choose_winner/edit">
-          <input type="hidden" name="_method" value="put">
+          <a class="button icon is-medium custom-circle-button"><i class="fa fa-arrow-left"></i></a>
+          <a class="button icon is-medium is-disabled custom-circle-button"><i class="fa fa-check"></i></a>
+        </div>
 
-          <a class="button icon is-medium custom-circle-button" href="/user/pending_matches"><i class="fa fa-arrow-left"></i></a>
-
-          <% winner = "" %>
-   
-          <button type="submit" name="team" value="<%= winner %>" class="button icon is-medium is-disabled custom-circle-button"><i class="fa fa-check"></i></button>
-        </form>
       <% end %>
     </div>
 
