@@ -93,7 +93,7 @@ class User < ActiveRecord::Base
   def singles_ratio
     return "OVER 9000" if self.username == "Rosy"
     if singles_results.any? 
-      100 * (singles_wins/singles_total_plays.to_f)
+      (100 * (singles_wins/singles_total_plays.to_f)).round(2)
     else
       "0.0"
     end
@@ -130,7 +130,7 @@ class User < ActiveRecord::Base
   def doubles_ratio
     return "OVER 9000" if self.username == "Rosy"
     if doubles_total_plays > 0
-      100 * (doubles_wins/doubles_total_plays.to_f) 
+      (100 * (doubles_wins/doubles_total_plays.to_f)).round(2)
     else
       "0.0"
     end
