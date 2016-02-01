@@ -113,7 +113,7 @@ class User < ActiveRecord::Base
   #Calculate's user's doubles losses.
   def doubles_losses
     total_wins = 0
-    get_teams.each {|team| total_wins += team.doubles_results.sum(:win)}
+    get_teams.each {|team| total_wins += team.doubles_results.sum(:loss)}
     total_wins
   end
 

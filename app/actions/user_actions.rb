@@ -318,7 +318,37 @@ end
 
 
 put '/user/pending_matches/choose_winner' do
-  @match = Match.find params[:match_id]
-  @match.match_over(params[:team])
+  match = Match.find params[:match_id]
+  winner = params[:team]
+  puts "---------------------------"
+  if match.category == "singles"
+    match.match_over(params[:team])
+  else
+    players = MatchInvite.where(match_id: match.id)
+    left = []
+    right = []
+    players.each do |player|
+      if player.side == "1"
+        left << player.user_id
+      else
+        right << player.user_id
+      end
+    end
+    left_team = "#{left[0]},#{left[1]}"
+    right_team = "#{right[0]},#{right[1]}"
+
+    if winner == "1"
+      match.match_over(left_team)
+    else
+      match.match_over(right_team)
+    end
+  end
   redirect '/'
 end
+
+
+
+
+
+
+

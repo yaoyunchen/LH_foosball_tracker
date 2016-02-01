@@ -54,7 +54,7 @@ class Match < ActiveRecord::Base
       members = Team.find_by(members: team)
       win = 0
       loss = 0
-      team == winning_side ? win += 1 : loss += 1
+      team == winning_side ? win = 1 : loss = 1
 
       members.doubles_results.create!(
         match_id: self.id,
