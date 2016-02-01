@@ -72,9 +72,9 @@ post '/user/match/doubles/new' do
 
   player_array << {user_id: params[:user2], side: 2} 
 
-  player_array << {user_id: params[:user2], side: 2} 
+  player_array << {user_id: params[:user3], side: 2} 
   
-  player_array << {user_id: params[:user2], side: 2} 
+  player_array << {user_id: params[:user4], side: 2} 
 
   player_array.each do |ele|
     ele[:side] = 1 if ele[:user_id] == params[:teammate]
@@ -143,19 +143,52 @@ put '/user/match_invites' do
     current_user.decline_invite(match_id)
   end
 
-  erb :'/'
+  redirect '/'
 end
 
 
 ####################
 
 get '/user/pending_invites' do
+  redirect '/users/login' unless current_user
+
+  own_invites = current_user.matches.where(status: nil).order(created_at: :desc)
+  
+  @invites_array = []
+
+  own_invites.each do |invite|
+    
+    sent = ((Time.now - invite.created_at)/86400).to_i
+
+    invitee_array = []
+    invitees = MatchInvite.where(match_id: invite.id).where.not(user_id: current_user.id)
+    invitees.each do |user|
+      invitee_array << {
+        username: User.find_by(id: user.user_id).username,
+        img_path: User.find_by(id: user.user_id).img_path
+      }
+    end
+    invitee_array
+
+    @invites_array << {
+      id: MatchInvite.find_by(match_id: invite.id, user_id: current_user.id).id,
+      category: invite.category,
+      sent: sent,
+      invitees: invitee_array
+    }
+  end
+
+  @invites_array
   erb :'/user/pending_invites/index'
 end
 
 
 put '/user/pending_invites' do
+  @match_invite = MatchInvite.find(params[:match_invite_id].to_i)
+  match_id = @match_invite.match_id
+  Match.find_by(id: match_id).match_cancelled
 
+  redirect '/'
 end
 
 ####################
