@@ -29,10 +29,15 @@ class Match < ActiveRecord::Base
     players.each do |player|
       win = 0
       loss = 0
-      player.side == winning_side ? win += 1 : loss += 1
+      #winning side is integer, player side was string
+      if player.side.to_i == winning_side.to_i
+        win = 1
+      else
+        loss = 1
+      end
       puts win
       puts loss
-      SinglesResult.create!(
+      SinglesResult.create(
         match_id: self.id,
         user_id: player.user_id,
         side: player.side,
