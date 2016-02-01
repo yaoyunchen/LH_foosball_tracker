@@ -23,7 +23,7 @@ get '/user/match/singles/new' do
 
   @players_arrays
 
-  erb :'match/singles/new'
+  erb :'/match/singles/new'
 end
 
 #Submits form for requesting a match.
@@ -150,6 +150,7 @@ end
 
 ####################
 
+
 get '/user/pending_invites' do
   redirect '/users/login' unless current_user
 
@@ -200,86 +201,125 @@ end
 get '/user/pending_matches' do
   redirect '/users/login' unless current_user
 
-  matches = current_user.match_results.where(result: nil)
+  all_set_matches = Match.where(status: "set").order(:updated_at)
+
+  
+  your_matches = []
+  
+  all_set_matches.each do |match|
+    invites = MatchInvite.where(match_id: match.id)
+    
+    invites.each do |invite|
+      if invite.user_id == current_user.id
+        matches = Match.find_by(id: invite.match_id)
+        your_matches << matches
+      end
+    end
+  end
+  your_matches
 
   @match_hash_array = []
   
-  matches.each do |match|
-    team = match.team
-    other_players = MatchResult.where(match_id: match.match_id).where.not(user_id: current_user.id)
-    other_players.count == 1 ? type = "singles" : type = "doubles"
+  your_matches.each do |match|
+    category = match.category
+    time = match.updated_at
 
-    others_array = []
-    other_players.each do |result|
-      player = User.find_by(id: result.user_id)
-      others_array << {username: player.username, img_path: player.img_path, team: result.team}
+    your_side = MatchInvite.where(match_id: match.id).where(user_id: current_user.id)[0].side
+
+    players = MatchInvite.where(match_id: match.id).where.not(user_id: current_user.id)
+    player_array = []
+
+    players.each do |player|
+      player_array << {
+        username: User.find_by(id: player.user_id).username,
+        img_path: User.find_by(id: player.user_id).img_path,
+        side: player.side
+      }
     end
-    others_array
+    player_array
 
-    result = {
-      match_id: match.match_id,
-      other_players: others_array,
-      accepted_on: match.match.created_at,
-      type: type, 
-      team: team
+    @match_hash_array << {
+      your_side: your_side,
+      match_id: match.id,
+      time: time,
+      category: category, 
+      players: player_array
     }
-    @match_hash_array << result
   end
 
   @match_hash_array
 
-  erb :'user/pending_matches/index'
+  erb :'/user/pending_matches/index'
 end
-
-# #Shows a form to let user's end a match either from cancelling or selecting a winner.
-# get '/user/pending_matches/:match_id/edit' do
-
-
-# end
 
 #Submits a form for accepting or declining a specific invite in the invites list.
-put '/user/pending_matches/:match_id' do
+put '/user/pending_matches' do
   redirect '/users/login' unless current_user
-
-  @match = Match.find params[:match_id]
-
-  choice = params[:choice]  #"cancelled"
-
-  if choice == "cancelled"
+  @match = Match.find_by(id: params[:match_id].to_i)
+  p params
+  if params[:status] == "cancelled"
     @match.match_cancelled
+    redirect '/'
   else
-    redirect "/user/pending_matches/#{params[:match_id]}/choose_winner"
+    redirect '/user/pending_matches/choose_winner'
   end
-
-  redirect '/'
 end
 
-get '/user/pending_matches/:match_id/choose_winner' do
+get '/user/pending_matches/choose_winner' do
   redirect '/users/login' unless current_user
 
-  match = Match.find params[:match_id]
-  team_left = MatchResult.where(match_id: match.id ,user_id: current_user.id)
-  players_left = []
-  team_left.each do |member|
-    player = User.find_by(id: member.user_id)
-    players_left << {username: player.username, img_path: player.img_path, team: member.team}
+  #match = Match.find params[:match_id]
+  match = Match.find(1)
+
+  team_left = []
+  team_right = []
+
+  if match.category == "singles"
+    left_player = SinglesResult.find_by(match_id: match.id,user_id: current_user.id)
+    team_left << {
+      username: User.find_by(id: left_player.user_id).username,
+      img_path: User.find_by(id: left_player.user_id).img_path,
+      side: left_player.side
+    }
+    right_player = SinglesResult.where(match_id: match.id).where.not(user_id: current_user.id)
+    team_right << {
+      username: User.find_by(id: right_player[0].user_id).username,
+      img_path: User.find_by(id: right_player[0].user_id).img_path,
+      side: right_player[0].side
+    }
+  else
+
+
   end
 
-  team_right = MatchResult.where.not(team: team_left[0].team).where(match_id: match.id)
-  players_right = []
-  team_right.each do |member|
-    player = User.find_by(id: member.user_id)
-    players_right << {username: player.username, img_path: player.img_path, team: member.team}
-  end
+  team_left
+  team_right
+  # team_left = MatchResult.where(match_id: match.id ,user_id: current_user.id)
+  # players_left = []
+  # team_left.each do |member|
+  #   player = User.find_by(id: member.user_id)
+  #   players_left << {username: player.username, img_path: player.img_path, team: member.team}
+  # end
 
-  @result = {left: players_left, right: players_right, id: match.id}
+  # team_right = MatchResult.where.not(team: team_left[0].team).where(match_id: match.id)
+  # players_right = []
+  # team_right.each do |member|
+  #   player = User.find_by(id: member.user_id)
+  #   players_right << {username: player.username, img_path: player.img_path, team: member.team}
+  # end
 
-  erb :'user/pending_matches/choose_winner'
+  @result = {
+    left: team_left, 
+    right: team_right, 
+    id: match.id
+  }
+
+  erb :'/user/pending_matches/choose_winner'
 end
 
 
-put '/user/pending_matches/:match_id/choose_winner/edit' do
-  @match = Match.find params[:match_id]
-  @match.match_over(params[:team])
-  redirect '/'
+put '/user/pending_matches/choose_winner' do
+  #@match = Match.find params[:match_id]
+  #@match.match_over(params[:team])
+  #redirect '/'
 end
