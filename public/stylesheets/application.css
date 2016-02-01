@@ -2366,6 +2366,8 @@ table {
   width: 100%;
   display: flex;
   justify-content: center; }
+  .custom-choose-team > div {
+    transition: all 0.3s; }
   .custom-choose-team .media-image {
     margin-right: 0;
     max-width: 100px; }
@@ -2383,11 +2385,17 @@ table {
   margin-top: 2rem; }
   .custom-record-options .button.custom-circle-button {
     margin-left: 1rem;
-    margin-right: 1rem; }
+    margin-right: 1rem;
+    transition: all 0.3s; }
+  .custom-record-options .button.is-success .fa {
+    color: #FFF; }
   .custom-record-options form {
     display: inline-block; }
 
 .custom-winner {
+  transform: scale(1.25); }
+
+.winner-is-selected {
   transform: scale(1.25); }
 
 .custom-win-ratio-update {

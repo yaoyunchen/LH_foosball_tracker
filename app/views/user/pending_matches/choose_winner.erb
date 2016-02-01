@@ -9,7 +9,7 @@
       <% @result.each do |match| %>
 
         <div class='custom-choose-team'>
-          <div class='js-select-winner' data-selected='false' data-team='<%= match[:left][0][:side] %>'>
+          <div class='js-select-winner' data-team='<%= match[:left][0][:side] %>'>
             <% match[:left].each do |player| %>
             <div class='media custom-media-profile'>
               <figure class='media-image'>
@@ -23,7 +23,7 @@
             <% end %>
           </div>
           
-          <div class='js-select-winner' data-selected='false' data-team='<%= match[:right][0][:side] %>'>
+          <div class='js-select-winner' data-team='<%= match[:right][0][:side] %>'>
             <% match[:right].each do |player| %>
             <div class='media custom-media-profile'>
               <figure class='media-image'>

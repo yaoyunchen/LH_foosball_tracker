@@ -99,6 +99,9 @@
   display: flex
   justify-content: center
 
+  > div
+    transition: all .3s
+
   .media-image
     margin-right: 0
     max-width: 100px
@@ -120,11 +123,18 @@
   .button.custom-circle-button
     margin-left: 1rem
     margin-right: 1rem
+    transition: all .3s
+
+  .button.is-success .fa
+    color: #FFF
 
   form 
     display: inline-block
 
 .custom-winner 
+  transform: scale(1.25)
+
+.winner-is-selected
   transform: scale(1.25)
 
 .custom-win-ratio-update 
