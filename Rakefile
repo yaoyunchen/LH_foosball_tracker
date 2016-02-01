@@ -33,6 +33,7 @@ task "js:compile" do
   paths << 'assets/js/_select_players_to_invite.js'
   paths << 'assets/js/_respond_to_invite.js'
   paths << 'assets/js/_record_match.js'
+  paths << 'assets/js/_select_winner.js'
 
   File.open('public/javascript/application.js', 'w') do |file|
 

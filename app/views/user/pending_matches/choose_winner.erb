@@ -4,34 +4,48 @@
   <div class='container'>
     <h1 class='title'>Record Match</h1>
 
-    <div class="custom-select-winner">
+    <div class="custom-select-winner-wrapper">
 
       <% @result.each do |match| %>
 
-        <% match[:left].each do |player| %>
-          <figure class='custom-select-player'>
-            <% unless player[:img_path] == nil %>
-              <img src="<%= player[:img_path] %>">
-            <% else %>
-              <img src="/images/avatar.png">
+        <div class='custom-choose-team'>
+          <div class='js-select-winner' data-selected='false' data-team='<%= match[:left][0][:side] %>'>
+            <% match[:left].each do |player| %>
+            <div class='media custom-media-profile'>
+              <figure class='media-image'>
+                <% unless player[:img_path] == nil %>
+                  <img src="<%= player[:img_path] %>">
+                <% else %>
+                  <img src="/images/avatar.png">
+                <% end %>
+              </figure>
+              </div>
             <% end %>
-          </figure>
-          <p><%= player[:username] %></p>
-        <% end %>
-        <% match[:right].each do |player| %>
-          <figure class='custom-select-player'>
-            <% unless player[:img_path] == nil %>
-              <img src="<%= player[:img_path] %>">
-            <% else %>
-              <img src="/images/avatar.png">
+          </div>
+          
+          <div class='js-select-winner' data-selected='false' data-team='<%= match[:right][0][:side] %>'>
+            <% match[:right].each do |player| %>
+            <div class='media custom-media-profile'>
+              <figure class='media-image'>
+                <% unless player[:img_path] == nil %>
+                  <img src="<%= player[:img_path] %>">
+                <% else %>
+                  <img src="/images/avatar.png">
+                <% end %>
+              </figure>
+              </div>
             <% end %>
-          </figure>
-          <p><%= player[:username] %></p>
-        <% end %>
+          </div>
+        </div>
 
-        <div class='is-centered'>
-          <a class="button icon is-medium custom-circle-button"><i class="fa fa-arrow-left"></i></a>
-          <a class="button icon is-medium is-disabled custom-circle-button"><i class="fa fa-check"></i></a>
+        <div class='is-centered custom-record-options'>
+          <a href='/user/pending_matches' class="button icon is-medium custom-circle-button"><i class="fa fa-arrow-left"></i></a>
+          <form id='ChooseWinner' method='post' action='/user/pending_matches/choose_winner'>
+            <input type='hidden' name='_method' value='put'>
+            <input type='hidden' name='match_id' value='<%= match[:id] %>'>
+            <input type='hidden' name='team' value=''>
+            <button class="button icon is-medium is-disabled custom-circle-button"><i class="fa fa-check"></i></button>
+          </form>
         </div>
 
       <% end %>

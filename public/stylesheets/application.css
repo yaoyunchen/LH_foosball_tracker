@@ -2353,10 +2353,22 @@ table {
     line-height: 40px;
     color: #666; }
 
-.custom-select-winner {
-  margin: 3rem 0;
+.custom-select-winner-wrapper {
+  margin: 3rem 0; }
+  .custom-select-winner-wrapper .media {
+    border: none;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top: 0;
+    padding-top: 0; }
+
+.custom-choose-team {
+  width: 100%;
   display: flex;
   justify-content: center; }
+  .custom-choose-team .media-image {
+    margin-right: 0;
+    max-width: 100px; }
 
 .custom-select-player {
   margin-left: 1rem;
@@ -2366,6 +2378,14 @@ table {
   border-radius: 50%; }
   .custom-select-player img {
     display: block; }
+
+.custom-record-options {
+  margin-top: 2rem; }
+  .custom-record-options .button.custom-circle-button {
+    margin-left: 1rem;
+    margin-right: 1rem; }
+  .custom-record-options form {
+    display: inline-block; }
 
 .custom-winner {
   transform: scale(1.25); }
