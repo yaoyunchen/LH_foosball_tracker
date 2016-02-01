@@ -1,0 +1,56 @@
+<div class="container custom-container-with-subnav">
+
+<section class="section">
+  <div class="container">
+
+  <h1 class='title'>Awaiting Responses</h1>
+
+    <ul>
+      <% @invites_array.each do |invites| %>
+        <li class='media custom-media-profile'>
+          <% if invites[:category] == "singles" %>
+            <figure class='media-image'>
+
+              <% unless invites[:invitees][0][:img_path] == nil %>
+                <img src="<%= invites[:invitees][0][:img_path] %>">
+              <% else %>
+                <img src="/images/avatar.png">
+              <% end %>
+            </figure>
+            <div class='media-content'>
+              <p>Sent <%= invites[:sent] %> days ago</p>
+              <p>To <%= invites[:invitees][0][:username] %></p>
+            </div>
+            <div data-match-invite-id="<%= invites[:id] %>">
+              <a class="button icon is-medium custom-circle-button js-cancel-invite"><i class="fa fa-times"></i></a>
+            </div>
+          <% else %>
+            <div class='custom-media-image-collection'>
+              <% invites[:invitees].each do |user| %>
+                <figure class='media-image'>
+                  <% unless user[:img_path] == nil %>
+                    <img src="<%= user[:img_path] %>">
+                  <% else %>
+                    <img src="/images/avatar.png">
+                  <% end %>
+                </figure>
+              <% end %>
+            </div>
+            
+            <div class='media-content'>
+              <p>Sent <%= invites[:sent] %> days ago</p>
+              <p>To <%= invites[:invitees][0][:username] %>, <%= invites[:invitees][1][:username] %>, <%= invites[:invitees][2][:username] %></p>
+            </div>
+            <div data-match-invite-id="<%= invites[:id] %>">
+              <a class="button icon is-medium custom-circle-button js-cancel-invite"><i class="fa fa-times"></i></a>
+            </div>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</section>
+
+<%= erb :'_sub_nav' %>
+
+</div>

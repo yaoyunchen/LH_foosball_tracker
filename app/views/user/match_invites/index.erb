@@ -1,56 +1,37 @@
 <div class="container custom-container-with-subnav">
+  <section class="section">
+    <div class="container">
 
-<section class="section">
-  <div class="container">
-
-  <h1 class='title'>Match Invites</h1>
-
-    <ul>
-      <% @invite_array.each do |invite| %>
-        <li class='media custom-media-profile'>
-
-          <figure class='media-image'><img src='/images/player_04.jpg'></figure>
-          <div class='media-content'>
-            <p>Sent 1 days ago</p>
-            <p>From JarHead</p>
-          </div>
-
-          <div>
-            <a class="button icon is-medium custom-circle-button"><i class="fa fa-times"></i></a>
-            <a class="button icon is-medium custom-circle-button"><i class="fa fa-check"></i></a>
-          </div>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-</section>
-
-
-
-<% @invite_array.each do |invite| %>
-  -------------------------------------
-  <p>
-    Issuer: <%= invite[:issuer] %>, 
-    Match Type: <%= invite[:match_type] %>
-    <% if invite[:match_type] == "doubles" %>
-      Teams: <%= invite[:left_players] %>  / <%= invite[:right_players] %>
-    <% else %>
-      On team: <%= invite[:team] %> 
-    <% end %>
-    <% unless invite[:message] == "" %>
-      Message: <%= invite[:message] %> 
-    <% end %>
+    <h1 class='title'>Match Invites</h1>
     
-    <form method="POST" action="/user/match_invites/<%= invite[:id]%>">
-      <input type="hidden" name="_method" value ="put">
+      <ul id='MatchInvites'>
+        <% @invite_array.each do |invite| %>
+          <li class='media custom-media-profile'>
+            <figure class='media-image'>
+              <% unless invite[:img_path] == nil %>
+                <img src="<%= invite[:img_path] %>">
+              <% else %>
+                <img src="/images/avatar.png">
+              <% end %>
+            </figure>
+            <div class='media-content'>
+              <p>Sent <%= invite[:sent] %> days ago</p>
+              <p>From <%= invite[:issuer] %></p>
+              <p><%= invite[:category] %></p>
+              <% unless invite[:message] == "" %>
+                <p>Message: <%= invite[:message] %></p>
+              <% end %>
+            </div>
+            <div data-match-invite-id="<%= invite[:id] %>">
+              <a class="button icon is-medium custom-circle-button js-cancel-invite"><i class="fa fa-times"></i></a>
+              <a class="button icon is-medium custom-circle-button js-accept-invite"><i class="fa fa-check"></i></a>
+            </div>
+          </li>
+        <% end %>
+      </ul>
 
-      <button type="submit" name="choice" value='true'> Accept </button>
-      <button type="submit" name="choice" value='false'> Decline </button>
-    </form>
-  </p>
-<% end %>
+    </div>
+  </section>
 
-
-<%= erb :'_sub_nav' %>
-
+  <%= erb :'_sub_nav' %>
 </div>
