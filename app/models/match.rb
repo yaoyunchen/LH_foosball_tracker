@@ -29,7 +29,7 @@ class Match < ActiveRecord::Base
     players.each do |player|
       win = 0
       loss = 0
-      player.side == "1" ? win += 1 : loss += 1
+      player.side == winning_side ? win += 1 : loss += 1
       puts win
       puts loss
       SinglesResult.create!(

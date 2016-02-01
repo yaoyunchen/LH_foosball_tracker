@@ -91,7 +91,6 @@ class User < ActiveRecord::Base
 
   #Calculate's user's ratio.
   def singles_ratio
-    return "OVER 9000" if self.username == "Rosy"
     if singles_results.any? 
       (100 * (singles_wins/singles_total_plays.to_f)).round(2)
     else
@@ -128,7 +127,6 @@ class User < ActiveRecord::Base
 
   #Calculate's user's doubles ratio.
   def doubles_ratio
-    return "OVER 9000" if self.username == "Rosy"
     if doubles_total_plays > 0
       (100 * (doubles_wins/doubles_total_plays.to_f)).round(2)
     else

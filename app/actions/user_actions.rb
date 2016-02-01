@@ -17,7 +17,7 @@ get '/user/match/singles/new' do
       img_path: user.img_path,
       wins: user.singles_wins,
       losses: user.singles_losses,
-      ratio: user.singles_ratio 
+      ratio: user.singles_ratio.to_i.round(2)
     }
   end
 
@@ -32,7 +32,7 @@ post '/user/match/singles/new' do
   
   message = params[:message]   #Trash talk some shit.
 
-  player_array = [{user_id: params[:user2], side: 1}]
+  player_array = [{user_id: params[:user2], side: 2}]
   
   current_user.issue_match(player_array, message)
 
@@ -53,7 +53,7 @@ get '/user/match/doubles/new' do
       img_path: user.img_path,
       wins: user.doubles_wins,
       losses: user.doubles_losses,
-      ratio: user.doubles_ratio 
+      ratio: user.doubles_ratio.to_i.round(2) 
     }
   end
 
