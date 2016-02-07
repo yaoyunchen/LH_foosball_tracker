@@ -1,5 +1,6 @@
 # FoosFight - The Foosball Tracker App
 Lighthouse Labs Jan 2016 Cohort Midterm Project
+Link: https://foosfight.herokuapp.com/
 
 # Collaborators
 Jonathen Morrissey, Nicholas Gust, Andy Yao
